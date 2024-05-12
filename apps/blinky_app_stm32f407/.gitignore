@@ -4,6 +4,9 @@
 *.o
 *.lnp
 *.dep
+*.htm
+*.axf
+
 
 #ignore
 *.i

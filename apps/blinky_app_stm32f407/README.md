@@ -1,9 +1,9 @@
 ### Code Example(CE):<br>
-# RCC peripheral of STM32F407 
+# Blinky app for STM32F407
 
-The CE demostrates several uses RCC peripheral of STM32F407 MCU.
-The CE uses the library [rcc_stm32f407_lib](https://github.com/ayushjain141/rcc_stm32f407_lib) to configure the internal system clock to PLL and uses the MCO pins of STM32 to output the system clock signals, which can analyzed by logic analyzer or oscilloscope.
-The systick timer of ARM© cortex© M4 in STM32 is also configured for 1 us time period and is used to generate micro-second (us) and mili-second delay (ms). To toggle GPIO, the following GPIO library in <i>\<application>/libs/gpio_stm32f407_lib </i> is used. 
+The CE demostrates GPIO peripheral example, here an led is toggled with a delay period which is controlled by a user button input.
+
+NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 
 ## Software Setup 
 - Tested with Keil uvision4 IDE: V5.22.0.0 (MDK522)
@@ -18,24 +18,11 @@ The systick timer of ARM© cortex© M4 in STM32 is also configured for 1 us time
 
 ## Operation
 
-The Following code flow is done in <i>\<application>/RTE/Device/STM32F407VETx/system_stm32f4xx.c</i><br>
+1. Upon the start of application the user led at pin `GPIOA7` starts to toggle at frequency of `1 Hz`.
 
-1. The MCO2 channel of STM32 is configured to output the system clock on it's pin. This is done before system clock config to avoid glitches on respective pin of MCO2.
+2. On pressing and holding the user button at pin `GPIOE4` the frequency of toggling changes to `20 Hz` and the led toggles at this frequency till the user-button is held pressed.
 
-2. Flash latency configured for compensating CPU clock period and Flash memory access time, with respect to the clock which will be configured.
-
-3. System clock is configured to run with PLL as it's source, the PLL is configured to give output clock frequency of 48MHz. Calculations for PLL configuration is done as per datasheet of STM32F407.
-
-4. The system clock output can be measured on the MCO2 pin.
-
-The Following code flow takes place in <i>\<application>/main.c</i>
-
-5. The systick timer is configured for a 1 Mhz period and is used to create us and ms delay functions.
-
-6. The macro `MILISECOND_TEST` can be used to test the milli-second or micro-second delay functionality. Please note that both the micro-second and mili-second delay can be used simultaneously also, based on the use-case. Here the macro is used for simplicity of this application only to allow uniform waveform on the GPIO pin mentioned below.
-
-7. The pin `A7` is configured as output and is toggled with the specified delay, this pin can be probed over logic analyzer or oscilloscope for measurement of the delays.
-
+3. When the button is released, the frequency is restored to `1 Hz`.
 
 <br><br>
 ---------------------------------------------------------

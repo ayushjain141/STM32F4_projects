@@ -1,0 +1,10 @@
+#ignore generated object files
+*.crf
+*.d
+*.o
+*.lnp
+*.dep
+
+#ignore
+*.i
+*.lst

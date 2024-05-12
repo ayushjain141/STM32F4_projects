@@ -86,7 +86,8 @@ void delay_us(uint32_t us)
  * Function Name: delay_ms()
  ********************************************************************************
  * Summary:
- *   Function to produce milli-seconds delay. The delay produced by this
+ *   Function to produce milli-seconds delay.
+ * 
  *   NOTE: The delay produced by this function has some constant error of approx
  * 	 4%, more analysis is required for improving this accuracy. "TO DO".
  *

@@ -8,3 +8,6 @@
 #ignore generated listing files
 *.i
 *.lst
+*.axf
+*.map
+*.htm

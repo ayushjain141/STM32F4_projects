@@ -12,10 +12,6 @@
 #include "bsp_aj_stm32f4.h"
 
 /*******************************************************************************
- * Macros
- ******************************************************************************/
-
-/*******************************************************************************
  * Function Name: main()
  *******************************************************************************
  * Summary:
@@ -36,7 +32,7 @@ int main()
 	/* Config GPIO for LED */
 	gpio_output_config(GPIOA, 7, gpio_otyper_push_pull, gpio_ospeedr_high,
 										gpio_pupdr_float);
-  
+
 	/* Config GPIO for Input button */
   gpio_input_config(GPIOE, 4, gpio_pupdr_pull_up);
 
@@ -54,19 +50,12 @@ int main()
 
     else
     {
-      toggle_delay = 2000;
+      toggle_delay = 1000;
     }
 
-    #if 0
-    delay_us(150);
-    SET(GPIOE, 12);
-    delay_us(150);
-    RESET(GPIOE, 12);
-    #else
     delay_ms(toggle_delay);
     SET(GPIOA, 7);
     delay_ms(toggle_delay);
     RESET(GPIOA, 7);
-    #endif
   }
 }

@@ -17,12 +17,18 @@
 #include "stm32f407xx.h"
 #endif  /* __STM32F407xx_H */
 
+/*******************************************************************************
+ * Macros
+ *******************************************************************************/
 #define SET(GPIOx, GPIO_pin)        (GPIOx -> BSRR |= (1 << GPIO_pin) & (~(1 << (GPIO_pin + 16))))
 #define RESET(GPIOx, GPIO_pin)      (GPIOx -> BSRR |= (1 << (GPIO_pin + 16))&(~(1 << GPIO_pin)))
 
 #define GENERAL_PURPOSE_INPUT       (0x00)
 #define GENERAL_PURPOSE_OUTPUT      (0X01)
 
+/*******************************************************************************
+* Global Variables
+*******************************************************************************/
 typedef enum
 {
     gpio_moder_in,
@@ -52,6 +58,9 @@ typedef enum
     gpio_pupdr_pull_down,
 } gpio_pupdr_t;
 
+/*******************************************************************************
+* Function Prototypes
+*******************************************************************************/
 void gpio_output_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
                       gpio_otyper_t otyper, gpio_ospeedr_t ospeedr,
 											gpio_pupdr_t pupdr);

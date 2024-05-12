@@ -9,6 +9,15 @@
 *******************************************************************************/
 #include "gpio_aj_stm32f4.h"
 
+/*******************************************************************************
+* File Name: gpio_output_config()
+*
+* Description:
+*	Configures the pin in the output mode.
+*
+* Related Document: See README.md
+*
+*******************************************************************************/
 void gpio_output_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
                       gpio_otyper_t otyper, gpio_ospeedr_t ospeedr,
 											gpio_pupdr_t pupdr)
@@ -36,6 +45,15 @@ void gpio_output_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
 									(pupdr << (gpio_pin * 2)));
 }
 
+/*******************************************************************************
+* File Name: gpio_input_config()
+*
+* Description:
+*	Configures the pin in the input mode.
+*
+* Related Document: See README.md
+*
+*******************************************************************************/
 void gpio_input_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
 					   gpio_pupdr_t pupdr)
 {

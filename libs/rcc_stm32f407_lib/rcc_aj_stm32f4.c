@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * File Name:    rcc_aj_stm32f4.c
+ *
+ * Description:
+ * Contains function definition for RCC peripheral.
+ *
+ * Related Document: See README.md
+ *
+ ******************************************************************************/
 /* The functions in this file may be called by the user in "system_stm32f4xx.c"
 *  in the SystemInit() function also.
 *

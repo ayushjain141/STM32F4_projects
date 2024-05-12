@@ -10,18 +10,14 @@
 #include "bsp_aj_stm32f4.h"
 
 /*******************************************************************************
- * Macros
- *******************************************************************************/
-
-/*******************************************************************************
  * Function Name: stm32f4_bsp_init()
  ********************************************************************************
  * Summary:
- *  Initiialzes the board hardware peripherals like delay timer, RCC etc. 
+ *  Initiialzes the board hardware peripherals like delay timer, RCC etc.
  *
  * Parameters:
  *  void
- * 
+ *
  * Return :
  *  void
  *

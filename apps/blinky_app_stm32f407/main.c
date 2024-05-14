@@ -26,36 +26,36 @@
  ******************************************************************************/
 int main()
 {
-  bool input_btn_read = 0;
-	uint32_t toggle_delay = 0;
+    bool input_btn_read = 0;
+    uint32_t toggle_delay = 0;
 
-	/* Config GPIO for LED */
-	gpio_output_config(GPIOA, 7, gpio_otyper_push_pull, gpio_ospeedr_high,
-										gpio_pupdr_float);
+    /* Config GPIO for LED */
+    gpio_output_config(GPIOA, 7, gpio_otyper_push_pull, gpio_ospeedr_high,
+                     gpio_pupdr_float);
 
-	/* Config GPIO for Input button */
-  gpio_input_config(GPIOE, 4, gpio_pupdr_pull_up);
+    /* Config GPIO for Input button */
+    gpio_input_config(GPIOE, 4, gpio_pupdr_pull_up);
 
-	/* Initialize the BSP */
-  stm32f4_bsp_init();
+    /* Initialize the BSP */
+    stm32f4_bsp_init();
 
-  while (true)
-  {
-    input_btn_read = !(pin_read(GPIOE, 4));
-
-    if(input_btn_read)
+    while (true)
     {
-      toggle_delay = 50;
-    }
+        input_btn_read = !(pin_read(GPIOE, 4));
+    
+        if (input_btn_read)
+        {
+        toggle_delay = 50;
+        }
 
-    else
-    {
-      toggle_delay = 1000;
-    }
+        else
+        {
+        toggle_delay = 1000;
+        }
 
-    delay_ms(toggle_delay);
-    SET(GPIOA, 7);
-    delay_ms(toggle_delay);
-    RESET(GPIOA, 7);
-  }
+        delay_ms(toggle_delay);
+        SET(GPIOA, 7);
+        delay_ms(toggle_delay);
+        RESET(GPIOA, 7);
+    }
 }

@@ -164,7 +164,8 @@ extern RCC_PLL_CONFIG_PARAMS_t pll_config;
  ******************************************************************************/
 void MCO_Config(MCO_CHANNEL_e mco_channel, MCO_CLOCK_SOURCE_e mco_clock_source,
                 MCO_PRESCALER_e mco_prescaler);
-void RCC_System_Clock_Source_Config(int system_clock_source, int pll_clock_source, RCC_PLL_CONFIG_PARAMS_t *rcc_pll_config_param_t);
+void RCC_System_Clock_Source_Config(int system_clock_source, int pll_clock_source,
+                                        RCC_PLL_CONFIG_PARAMS_t *rcc_pll_config_param_t);
 int systick_config_init(uint32_t interrupt_mode, uint32_t ticks);
 void delay_us_systick(uint32_t us_delay);
 void delay_ms_systick(uint32_t ms_delay);

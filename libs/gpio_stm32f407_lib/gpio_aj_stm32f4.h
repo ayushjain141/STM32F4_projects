@@ -63,14 +63,14 @@ typedef enum
 *******************************************************************************/
 void gpio_output_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
                       gpio_otyper_t otyper, gpio_ospeedr_t ospeedr,
-											gpio_pupdr_t pupdr);
+                                            gpio_pupdr_t pupdr);
 
 void gpio_input_config(GPIO_TypeDef* GPIOx, uint32_t gpio_pin,
-					   gpio_pupdr_t pupdr);
+                       gpio_pupdr_t pupdr);
 
 static __inline bool pin_read(GPIO_TypeDef* GPIOx, uint32_t gpio_pin)
 {
-	return (0x01 & (uint32_t)(GPIOx->IDR >> gpio_pin));
+    return (0x01 & (uint32_t)(GPIOx->IDR >> gpio_pin));
 }
 
 #endif  /* GPIO_AJ_STM32F4 */

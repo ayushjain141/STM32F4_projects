@@ -13,7 +13,7 @@
 #include "stm32f4xx.h"
 #include <stdbool.h>
 
-#ifdef	__STM32F407xx_H
+#ifdef  __STM32F407xx_H
 #include "stm32f407xx.h"
 #endif  /* __STM32F407xx_H */
 

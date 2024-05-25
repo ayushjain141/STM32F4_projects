@@ -1,7 +1,7 @@
 ### Code Example(CE):<br>
 # Blinky app for STM32F407
 
-The CE demostrates GPIO peripheral example, here an led is toggled with a delay period which is controlled by a user button input.
+The CE demostrates GPIO peripheral example, here an LED is toggLED with a delay period which is controlled by a user button input.
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 
@@ -18,11 +18,9 @@ NOTE: The system core clock is configured to use PLL at 100MHz, this is implemen
 
 ## Operation
 
-1. Upon the start of application the user led at pin `GPIOA7` starts to toggle at frequency of `1 Hz`.
+1. Upon the start of application the user LED at pin `USER_LED_PIN` starts to toggle at frequency of `10 Hz`.
 
-2. On pressing and holding the user button at pin `GPIOE4` the frequency of toggling changes to `20 Hz` and the led toggles at this frequency till the user-button is held pressed.
-
-3. When the button is released, the frequency is restored to `1 Hz`.
+2. On every press of user button at pin `USER_BTN_PIN`, the `EXTI` interrupt is triggered and the frequency of user LED toggling changes in the `EXTI4_IRQHandler`. There are 3 LED blinking delays which are mentioned in ` toggle_delay[]` in <i>\< application >/main.c.
 
 <br><br>
 ---------------------------------------------------------

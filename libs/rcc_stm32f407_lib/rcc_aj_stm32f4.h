@@ -29,15 +29,15 @@
  * Macros
  ******************************************************************************/
 /* PLL clock source */
-#define PLL_CLOCK_SRC_HSI						(0)
-#define PLL_CLOCK_SRC_HSE						(1U)
-#define RCC_SUCCESS_FLAG						(0)
-#define RCC_FAIL_FLAG							(1)
+#define PLL_CLOCK_SRC_HSI                       (0)
+#define PLL_CLOCK_SRC_HSE                       (1U)
+#define RCC_SUCCESS_FLAG                        (0)
+#define RCC_FAIL_FLAG                           (1)
 #define SYSTICK_RELOAD_VAL_MAX                  (SysTick_LOAD_RELOAD_Msk)
-#define AHB_PRESSCALER_ARR_SIZE					(9)
-#define APB1_PRESSCALER_ARR_SIZE				(5)
-#define APB2_PRESSCALER_ARR_SIZE				(5)
-#define RTC_PRESSCALER_ARR_SIZE					(31)	/* To Do */
+#define AHB_PRESSCALER_ARR_SIZE                 (9)
+#define APB1_PRESSCALER_ARR_SIZE                (5)
+#define APB2_PRESSCALER_ARR_SIZE                (5)
+#define RTC_PRESSCALER_ARR_SIZE                 (31)    /* To Do */
 
 /*PLL dividers/multipliers */
 /*

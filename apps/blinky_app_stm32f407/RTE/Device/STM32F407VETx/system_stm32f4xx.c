@@ -178,7 +178,7 @@ void SystemInit(void)
 	FLASH->ACR |= (2 << FLASH_ACR_LATENCY_Pos)|(1 << FLASH_ACR_PRFTEN_Pos)|(1 << FLASH_ACR_ICEN_Pos)|(1 << FLASH_ACR_DCEN_Pos);
 
 	/* Set PLL for 100 MHz system clock requirement */
-	/* For PLLM, Ensure 2 MHZ vco input, to avoid PLL jitter. Here HSE is of 8 MHz.
+    /* For PLLM, Ensure 2 MHZ vco input, to avoid PLL jitter. Here HSE is of 8 MHz.
      * See MCU user manual.
      */
 	pll_config.PLLM = 4;

@@ -21,7 +21,7 @@
  * Macros
  *******************************************************************************/
 #define SET(GPIOx, GPIO_pin)        (GPIOx -> BSRR |= (1 << GPIO_pin) & (~(1 << (GPIO_pin + 16))))
-#define RESET(GPIOx, GPIO_pin)      (GPIOx -> BSRR |= (1 << (GPIO_pin + 16))&(~(1 << GPIO_pin)))
+#define RESET(GPIOx, GPIO_pin)      (GPIOx -> BSRR |= (1 << (GPIO_pin + 16)) & (~(1 << GPIO_pin)))
 
 #define GENERAL_PURPOSE_INPUT       (0x00)
 #define GENERAL_PURPOSE_OUTPUT      (0X01)

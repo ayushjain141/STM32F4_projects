@@ -272,7 +272,7 @@ void system_clock_setting(uint32_t sys_core_clock, system_bus_clk_cfg_t *sys_bus
 
     /* Set the RTC bus clock prescaler */
     RCC->CFGR |= (uint32_t)((RCC->CFGR & (~(RCC_CFGR_RTCPRE_Msk))) |
-									((sys_bus_clk_cfg->rtcpre_pre)));
+                    ((sys_bus_clk_cfg->rtcpre_pre)));
 }
 
 /*******************************************************************************

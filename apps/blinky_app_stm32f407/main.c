@@ -19,8 +19,8 @@
 #define USER_BTN_PORT						(GPIOE)
 #define USER_BTN_PIN						(4)
 #define USER_BTN_INTR_INST					(EXTI4_IRQn)
-#define USR_BTN_INTR_PRIORITY				(3)
-#define LED_BLINK_DELAY_NUM					(3)
+#define USR_BTN_INTR_PRIORITY               (3)
+#define LED_BLINK_DELAY_NUM                 (3)
 
 /*******************************************************************************
  * Global Variables

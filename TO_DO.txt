@@ -1,0 +1,12 @@
+===========================================================
+TO DO
+===========================================================
+The below list includes known issues/bugs or improvements/features which will 
+have to have addressed in future releases.
+
+(#). Currently clock configuration using RCC takes place in system_init() function in the
+"system_stm32f4xx.c", move it to stm32f4_bsp_init() function.
+
+(#). Add configs for RTC in RCC lib.
+
+(#). ...

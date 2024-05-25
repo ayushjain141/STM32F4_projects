@@ -34,6 +34,10 @@
 #define RCC_SUCCESS_FLAG                        (0)
 #define RCC_FAIL_FLAG                           (1)
 #define SYSTICK_RELOAD_VAL_MAX                  (SysTick_LOAD_RELOAD_Msk)
+#define AHB_PRESSCALER_ARR_SIZE					(9)
+#define APB1_PRESSCALER_ARR_SIZE				(5)
+#define APB2_PRESSCALER_ARR_SIZE				(5)
+#define RTC_PRESSCALER_ARR_SIZE					(31)	/* To Do */
 
 /*PLL dividers/multipliers */
 /*
@@ -136,6 +140,43 @@ typedef enum
 
 typedef enum
 {
+    RTCPRE_PRESCALER_BY_NO_CLOCK1 = 0,
+    RTCPRE_PRESCALER_BY_NO_CLOCK2 = 1,
+    RTCPRE_PRESCALER_BY_2 = 0,
+    RTCPRE_PRESCALER_BY_3,
+    RTCPRE_PRESCALER_BY_4,
+    RTCPRE_PRESCALER_BY_5,
+    RTCPRE_PRESCALER_BY_6,
+    RTCPRE_PRESCALER_BY_7,
+    RTCPRE_PRESCALER_BY_8,
+    RTCPRE_PRESCALER_BY_9,
+    RTCPRE_PRESCALER_BY_10,
+    RTCPRE_PRESCALER_BY_11,
+    RTCPRE_PRESCALER_BY_12,
+    RTCPRE_PRESCALER_BY_13,
+    RTCPRE_PRESCALER_BY_14,
+    RTCPRE_PRESCALER_BY_15,
+    RTCPRE_PRESCALER_BY_16,
+    RTCPRE_PRESCALER_BY_17,
+    RTCPRE_PRESCALER_BY_18,
+    RTCPRE_PRESCALER_BY_19,
+    RTCPRE_PRESCALER_BY_20,
+    RTCPRE_PRESCALER_BY_21,
+    RTCPRE_PRESCALER_BY_22,
+    RTCPRE_PRESCALER_BY_23,
+    RTCPRE_PRESCALER_BY_24,
+    RTCPRE_PRESCALER_BY_25,
+    RTCPRE_PRESCALER_BY_26,
+    RTCPRE_PRESCALER_BY_27,
+    RTCPRE_PRESCALER_BY_28,
+    RTCPRE_PRESCALER_BY_29,
+    RTCPRE_PRESCALER_BY_30,
+    RTCPRE_PRESCALER_BY_31
+
+} RTCPRE_PRESCALER_e;
+
+typedef enum
+{
     SYSTICK_TICKINT_DISABLE,
     SYSTICK_TICKINT_ENABLE
 } SYSTICK_TICKINT_e;
@@ -154,6 +195,13 @@ typedef struct
     uint32_t PLLQ;
 } RCC_PLL_CONFIG_PARAMS_t;
 
+typedef struct
+{
+    uint8_t ppre1_apb1_pre;
+    uint8_t ppre2_apb2_pre;
+    uint8_t rtcpre_pre;
+} system_bus_clk_cfg_t;
+
 /*******************************************************************************
  * variables
  ******************************************************************************/
@@ -166,6 +214,8 @@ void MCO_Config(MCO_CHANNEL_e mco_channel, MCO_CLOCK_SOURCE_e mco_clock_source,
                 MCO_PRESCALER_e mco_prescaler);
 void RCC_System_Clock_Source_Config(int system_clock_source, int pll_clock_source,
                                         RCC_PLL_CONFIG_PARAMS_t *rcc_pll_config_param_t);
+void system_clock_setting(uint32_t sys_core_clock,
+                                                                                    system_bus_clk_cfg_t *sys_bus_clk_cfg);
 int systick_config_init(uint32_t interrupt_mode, uint32_t ticks);
 void delay_us_systick(uint32_t us_delay);
 void delay_ms_systick(uint32_t ms_delay);

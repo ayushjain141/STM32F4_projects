@@ -122,12 +122,14 @@ uint32_t SystemCoreClock = 16000000;
 const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
 const uint8_t APBPrescTable[8]  = {0, 0, 0, 0, 1, 2, 3, 4};
 
-RCC_PLL_CONFIG_PARAMS_t pll_config = {
+static RCC_PLL_CONFIG_PARAMS_t pll_config = {
 		.PLLM = 0,
 		.PLLN = 0,
 		.PLLP = 0,
 		.PLLQ = 0
 };
+
+system_bus_clk_cfg_t sys_bus_clk_cfg;
 
 /**
   * @}
@@ -164,19 +166,21 @@ void SystemInit(void)
 	 * in all the fields.
 	 */
 
-	/* My code starts */
-	/* Configure MCO and HSE clock below - temporary code segment, remove if not working on it */
+	/**** My code starts ****/
 
+	/* Configure MCO and HSE clock below - temporary code segment, remove if not working on it */
 	/* Following function configures MCO channel, output clock and prescaler. */
-	MCO_Config(MCO_CHANNEL_2, MCO2_CLOCK_SOURCE_SYSCLK, MCO_PRESCALER_BY_4);
+
+	/* Below may be uncommented to check the sysclock output on MCO2 */
+	// MCO_Config(MCO_CHANNEL_2, MCO2_CLOCK_SOURCE_SYSCLK, MCO_PRESCALER_BY_5);
 
 	/* Done as per reference manual for compensating CPU clock period and Flash memory access time */
 	FLASH->ACR |= (2 << FLASH_ACR_LATENCY_Pos)|(1 << FLASH_ACR_PRFTEN_Pos)|(1 << FLASH_ACR_ICEN_Pos)|(1 << FLASH_ACR_DCEN_Pos);
 
 	/* Set PLL for 100 MHz system clock requirement */
 	/* For PLLM, Ensure 2 MHZ vco input, to avoid PLL jitter. Here HSE is of 8 MHz.
-   * See MCU user manual.
-   */
+     * See MCU user manual.
+     */
 	pll_config.PLLM = 4;
 	pll_config.PLLN = 100;
 	pll_config.PLLP = 2;
@@ -187,8 +191,17 @@ void SystemInit(void)
 
 	/* Needs to be called as mentioned in it's description. */
 	SystemCoreClockUpdate();
-	
-	/* My code end */
+
+	/* Configure the clocks of buses like APB1(PPRE1), APB2(PPRE2) and RTC,
+	 * based on system clock
+	 */
+	sys_bus_clk_cfg.ppre1_apb1_pre = PPRE1_APB1_PRESCALER_BY_4;
+	sys_bus_clk_cfg.ppre2_apb2_pre = PPRE2_APB2_PRESCALER_BY_2;
+	sys_bus_clk_cfg.rtcpre_pre = RTCPRE_PRESCALER_BY_31;
+
+	system_clock_setting(SystemCoreClock, &sys_bus_clk_cfg);
+
+	/**** My code end ****/
 
 	/*below is the orignal code do not edit*/
   /* FPU settings ------------------------------------------------------------*/

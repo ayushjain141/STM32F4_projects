@@ -29,7 +29,7 @@ const uint32_t toggle_delay[] = {50, 500, 2000};
 volatile uint32_t delay_select = 0;
 
 /*******************************************************************************
- * Function Name: EXTI1_IRQHandler()
+ * Function Name: EXTI4_IRQHandler()
  *******************************************************************************
  * Summary:
  *  ISR for user button interrupt.
@@ -48,6 +48,7 @@ void EXTI4_IRQHandler(void)
   {
     delay_select = (delay_select + 1) % LED_BLINK_DELAY_NUM;
   }
+
   /* Clear the pending interrupt bit. */
   EXTI->PR |= (1U << USER_BTN_PIN);
 }
@@ -88,11 +89,11 @@ int main()
 
   __disable_irq();
 
-    NVIC_SetPriority(USER_BTN_INTR_INST, USR_BTN_INTR_PRIORITY);
+  NVIC_SetPriority(USER_BTN_INTR_INST, USR_BTN_INTR_PRIORITY);
 
-    NVIC_EnableIRQ(USER_BTN_INTR_INST);
+  NVIC_EnableIRQ(USER_BTN_INTR_INST);
 
-    __enable_irq();
+  __enable_irq();
 
   while (true)
   {

@@ -12,3 +12,4 @@
 *.map
 *.htm
 .vscode/
+*.dbgconf

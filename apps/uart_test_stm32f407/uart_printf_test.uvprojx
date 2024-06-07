@@ -49,13 +49,13 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>blinky_app_stm32f407</OutputName>
+          <OutputName>uart_test_stm32f407</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\listings\</ListingPath>
+          <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -186,13 +186,13 @@
             <RvdsVP>2</RvdsVP>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
-            <StupSel>0</StupSel>
+            <StupSel>8</StupSel>
             <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
-            <RoSelD>0</RoSelD>
-            <RwSelD>5</RwSelD>
+            <RoSelD>3</RoSelD>
+            <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -203,12 +203,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
+            <Ir1Chk>1</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
+            <Im1Chk>1</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -325,8 +325,8 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
-            <v6LangP>3</v6LangP>
+            <v6Lang>1</v6Lang>
+            <v6LangP>1</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,STM32F4XX,__ASSEMBLY__,KEIL_IDE,TM_DISCO_STM32F4_DISCOVERY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libs\;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\rcc_stm32f407_lib;..\..\libs\timer_stm32f407_lib;..\..\libs\bsp</IncludePath>
+              <IncludePath>..\..\libs;..\..\libs\rcc_stm32f407_lib;..\..\libs\bsp;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\timer_stm32f407_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,10 +364,10 @@
             <noStLib>0</noStLib>
             <RepFail>1</RepFail>
             <useFile>0</useFile>
-            <TextAddressRange></TextAddressRange>
-            <DataAddressRange></DataAddressRange>
+            <TextAddressRange>0x08000000</TextAddressRange>
+            <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\Objects\blinky_app_stm32f407.sct</ScatterFile>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -404,16 +404,6 @@
               <FileName>delay_aj_stm32f4.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\libs\delay_stm32f407_lib\delay_aj_stm32f4.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_aj_stm32f4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libs\gpio_stm32f407_lib\gpio_aj_stm32f4.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_aj_stm32f4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libs\gpio_stm32f407_lib\gpio_aj_stm32f4.h</FilePath>
             </File>
             <File>
               <FileName>rcc_aj_stm32f4.c</FileName>
@@ -464,12 +454,6 @@
       </component>
     </components>
     <files>
-      <file attr="config" category="header" name="Config\EventRecorderConf.h" version="1.0.0">
-        <instance index="0" removed="1">RTE\Compiler\EventRecorderConf.h</instance>
-        <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.1.0" condition="Cortex-M Device"/>
-        <package name="ARM_Compiler" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.2.0"/>
-        <targetInfos/>
-      </file>
       <file attr="config" category="source" condition="STM32F407xx_ARMCC" name="Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s" version="2.6.2">
         <instance index="0">RTE\Device\STM32F407VETx\startup_stm32f407xx.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.6.3" condition="STM32F4 CMSIS"/>

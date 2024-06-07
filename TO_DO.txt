@@ -1,12 +1,40 @@
 ===========================================================
-TO DO
+	TO DO
 ===========================================================
-The below list includes known issues/bugs or improvements/features which will 
-have to have addressed in future releases.
+The below list includes known issues/bugs or improvements/features which will have to have addressed in future releases.
 
-(#). Currently clock configuration using RCC takes place in system_init() function in the
-"system_stm32f4xx.c", move it to stm32f4_bsp_init() function.
+NOTE: Currently the priority is the basic functionality of the libraries and test-case apps. There are a few aspects of development which still need to be researched, some of these are listed below.
 
-(#). Add configs for RTC in RCC lib.
+(#). Build System:
 
-(#). ...
+	- Currently all tested with ARM compiler, check the code with GNU GCC compiler.
+
+	- Create a generic build system using "Make".
+
+	- Test the compilation on GNU GCC compiler, currently tested only on ARM, ARM creates a relatively more optimized code than other compilers for the ARM core.
+
+	- Check the software (libs + test apps), with various important compiler options.
+
+	- Check the software (libs + test apps) with various optimization levels.
+
+
+(#). RCC driver/test-app:
+
+	- Currently clock configuration using RCC takes place in system_init() function in the "system_stm32f4xx.c", move it to stm32f4_bsp_init() function.
+
+	- Add configs for RTC in RCC lib.
+
+
+(#). UART - 
+
+	- Test error correction techniques used in communication systems, for this read the digital communication systems theory/practical.
+
+
+(#). I2C -
+
+	-
+
+
+(#). SPI - 
+
+	-

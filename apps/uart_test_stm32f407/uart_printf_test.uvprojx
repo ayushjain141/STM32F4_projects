@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,STM32F4XX,__ASSEMBLY__,KEIL_IDE,TM_DISCO_STM32F4_DISCOVERY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libs;..\..\libs\rcc_stm32f407_lib;..\..\libs\bsp;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\timer_stm32f407_lib</IncludePath>
+              <IncludePath>..\..\libs;..\..\libs\rcc_stm32f407_lib;..\..\libs\bsp;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\timer_stm32f407_lib;..\..\libs\usart_stm32f407_lib;..\..\libs\utils_stm32f407_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,6 +424,26 @@
               <FileName>timer_aj_stm32f4.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\libs\timer_stm32f407_lib\timer_aj_stm32f4.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart_aj_stm32f4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libs\usart_stm32f407_lib\usart_aj_stm32f4.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart_aj_stm32f4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libs\usart_stm32f407_lib\usart_aj_stm32f4.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils_aj_stm32f4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libs\utils_stm32f407_lib\utils_aj_stm32f4.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils_aj_stm32f4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libs\utils_stm32f407_lib\utils_aj_stm32f4.h</FilePath>
             </File>
           </Files>
         </Group>

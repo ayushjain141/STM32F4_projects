@@ -131,6 +131,8 @@ static RCC_PLL_CONFIG_PARAMS_t pll_config = {
 
 system_bus_clk_cfg_t sys_bus_clk_cfg;
 
+uint32_t sys_clock = 0;
+
 /**
   * @}
   */
@@ -192,6 +194,9 @@ void SystemInit(void)
 
 	/* Needs to be called as mentioned in it's description. */
 	SystemCoreClockUpdate();
+	
+	/* Store the sysclock value in the global variable */
+	sys_clock = SystemCoreClock;
 
 	/* Configure the clocks of buses like APB1(PPRE1), APB2(PPRE2) and RTC,
 	 * based on system clock

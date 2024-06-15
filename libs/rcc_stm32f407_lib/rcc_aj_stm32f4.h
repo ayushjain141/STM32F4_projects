@@ -24,6 +24,7 @@
 #endif
 
 #include "core_cm4.h"
+#include "bsp_aj_stm32f4.h"
 
 /*******************************************************************************
  * Macros
@@ -207,9 +208,6 @@ typedef struct
  ******************************************************************************/
 extern RCC_PLL_CONFIG_PARAMS_t pll_config;
 
-/* This global variable stores the system clock value after it's configuration 
- * in the "system_stm32f4xx.c" */
-extern uint32_t sys_clock;
 
 /*******************************************************************************
  * Function Prototypes
@@ -223,5 +221,6 @@ void system_clock_setting(uint32_t sys_core_clock,
 int systick_config_init(uint32_t interrupt_mode, uint32_t ticks);
 void delay_us_systick(uint32_t us_delay);
 void delay_ms_systick(uint32_t ms_delay);
+uint32_t get_systemcore_clock(void);
 
 #endif /* End of File */

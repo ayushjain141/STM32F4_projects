@@ -12,6 +12,7 @@
 #include "gpio_aj_stm32f4.h"
 #include "rcc_aj_stm32f4.h"
 
+
 /*******************************************************************************
 * Function Name: usart_config()
 ********************************************************************************
@@ -27,10 +28,10 @@
 usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPIOx,
             uint8_t tx_gpio_pin, GPIO_TypeDef *rx_GPIOx, uint8_t rx_gpio_pin)
 {
-	usart_status_e_t status = USART_STATUS_SUCCESS;
-
     uint32_t tmp = 0;
-    float baud_usart_div = 0, baud_fractn = 0, baud_mantissa = 0;
+    float baud_usart_div = 0;
+    uint32_t baud_fractn = 0, baud_mantissa = 0;
+    uint32_t sys_clock = 0;
 
     /* Check whether the usart instance is valid or not - TO DO */
 
@@ -84,14 +85,14 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
             USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
     {
         /* Output type set to push-pull */
-        GPIOx->OTYPER |= (uint32_t)((GPIOx->OTYPER) & (~(1U << tx_gpio_pin)));
+        tx_GPIOx->OTYPER |= (uint32_t)((tx_GPIOx->OTYPER) & (~(1U << tx_gpio_pin)));
 
         /* Output speed set to max speed */
-        GPIOx->OSPEEDR |= (uint32_t)((GPIOx->OSPEEDR & (~(3U << (tx_gpio_pin * 2)))) |
+        tx_GPIOx->OSPEEDR |= (uint32_t)((tx_GPIOx->OSPEEDR & (~(3U << (tx_gpio_pin * 2)))) |
                         (3U << (tx_gpio_pin * 2)));
 
         /* No pull-up, pull-down enabled */
-        GPIOx->PUPDR |= (uint32_t)((GPIOx->PUPDR & (~(3U << (tx_gpio_pin * 2)))));
+        tx_GPIOx->PUPDR |= (uint32_t)((tx_GPIOx->PUPDR & (~(3U << (tx_gpio_pin * 2)))));
     }
 
     /* Set alternate function to pin, this AF number is from product datasheet's
@@ -103,15 +104,15 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
             USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
         {
             tmp = tx_gpio_pin/8;
-            GPIOA->AFR[tmp] |= (uint32_t)((GPIOA->AFR[tmp] & (~(0xFU << tx_gpio_pin * 4)))
-                                |(7U << tx_gpio_pin * 4));
+            tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4) )))
+                                |(7U << ((tx_gpio_pin % 8) * 4)));
         }
         else if(USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode ||
-        USART_TXRX_MODE_RX_EN == usart_cfg->txrxmod)
+        USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
         {
             tmp = rx_gpio_pin/8;
-            GPIOA->AFR[tmp] |= (uint32_t)((GPIOA->AFR[tmp] & (~(0xFU << rx_gpio_pin * 4)))
-                                |(7U << rx_gpio_pin * 4));
+            rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4))))
+                                |(7U << ((rx_gpio_pin % 8) * 4)));
         }      
     }
     else if( (UART4 == usart_cfg->instance) || (UART5 == usart_cfg->instance) ||
@@ -121,15 +122,15 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
             USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
         {
             tmp = tx_gpio_pin/8;
-            GPIOA->AFR[tmp] |= (uint32_t)((GPIOA->AFR[tmp] & (~(0xFU << tx_gpio_pin * 4)))
-                                |(8U << tx_gpio_pin * 4));
+            tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4))))
+                                |(8U << ((tx_gpio_pin % 8) * 4)));
         }
         else if(USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode ||
-        USART_TXRX_MODE_RX_EN == usart_cfg->txrxmod)
+        USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
         {
             tmp = rx_gpio_pin/8;
-            GPIOA->AFR[tmp] |= (uint32_t)((GPIOA->AFR[tmp] & (~(0xFU << rx_gpio_pin * 4)))
-                                |(8U << rx_gpio_pin * 4));
+            rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4))))
+                                |(8U << ((rx_gpio_pin % 8) * 4)));
         }
     }
 
@@ -157,11 +158,13 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
 
     /* Create the config data for USART_CR2 register */
     usart_cfg->instance->CR2 |= tmp;
+	
+    sys_clock = get_systemcore_clock();
 
     /* Calculate the fractional part and mantissa of the baud rate */
-    if( USART_COMPATIBLE_MODE_ASYNC == usart_cfg->compatmode &&
+    if( USART_COMPATIBLE_MODE_ASYNC == usart_cfg->compatmode ||
         USART_COMPATIBLE_MODE_SYNC == usart_cfg->compatmode)
-    {
+    {		
         baud_usart_div = ((sys_clock)/(usart_cfg->baudrate * 8 * (2 - usart_cfg->oversample)));
 
         if(USART_OVERSAMPLE_BY_16 == usart_cfg->oversample)
@@ -185,9 +188,6 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
                                         (baud_mantissa << 4U));
         }
     }
-
-    baud_fractn = usart_cfg->instance->baudrate
-
     return USART_STATUS_SUCCESS;
 }
 

@@ -46,6 +46,7 @@
  *    }
  */
 #include "rcc_aj_stm32f4.h"
+#include "bsp_aj_stm32f4.h"
 
 /*******************************************************************************
 * Function Name: MCO_Config
@@ -56,7 +57,7 @@
 *
 * Parameters:
 *  mco_channel:         MCO channel to output the clock signal on it's assosciated
-                        pin.
+*                       pin.
 *
 *  mco_clock_source:    The MCO pin will output this clock's signal.
 *
@@ -380,6 +381,65 @@ void delay_us_systick(uint32_t us_delay)
         while (!(SysTick->CTRL & (1UL << SysTick_CTRL_COUNTFLAG_Pos)));
     }
 }
+
+/*******************************************************************************
+* Function Name: get_systemcore_clock
+********************************************************************************
+* Summary:
+*       Returns the system core clock value from the pre-programmed RCC registers.
+*
+* Parameters:
+*
+* Return :
+*  uint32_t:         System core clock value.
+*
+*******************************************************************************/
+uint32_t get_systemcore_clock(void)
+{
+  uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+  uint32_t SystemCoreClock = 0;
+
+  /* Get SYSCLK source -------------------------------------------------------*/
+  tmp = RCC->CFGR & RCC_CFGR_SWS;
+
+  switch (tmp)
+  {
+    case 0x00:  /* HSI used as system clock source */
+      SystemCoreClock = HSI_CLOCK_VAL;
+      break;
+    case 0x04:  /* HSE used as system clock source */
+      SystemCoreClock = HSE_CLOCK_VAL;
+      break;
+    case 0x08:  /* PLL used as system clock source */
+
+      /* PLL_VCO = (HSE_CLOCK_VAL or HSI_CLOCK_VAL / PLL_M) * PLL_N
+         SYSCLK = PLL_VCO / PLL_P
+         */    
+      pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+      pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+
+      if (pllsource != 0)
+      {
+        /* HSE used as PLL clock source */
+        pllvco = (HSE_CLOCK_VAL / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+      }
+      else
+      {
+        /* HSI used as PLL clock source */
+        pllvco = (HSI_CLOCK_VAL / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+      }
+
+      pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) * 2;
+      SystemCoreClock = pllvco/pllp;
+      break;
+    default:
+      SystemCoreClock = HSI_CLOCK_VAL;
+      break;
+  }
+
+  return SystemCoreClock;
+}
+
 
 /* To Do */
 void systick_deconfig()

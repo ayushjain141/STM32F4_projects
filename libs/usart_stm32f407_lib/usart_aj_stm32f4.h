@@ -16,13 +16,15 @@
 #include <stdint.h>
 #include "utils_aj_stm32f4.h"
 
-
 #include "stm32f4xx.h"
 #include <stdbool.h>
+
+#include "bsp_aj_stm32f4.h"
 
 #ifdef  __STM32F407xx_H
 #include "stm32f407xx.h"
 #endif  /* __STM32F407xx_H */
+
 
 /*******************************************************************************
 * Macros

@@ -13,3 +13,5 @@
 *.htm
 .vscode/
 *.dbgconf
+*.scvd
+*.iex

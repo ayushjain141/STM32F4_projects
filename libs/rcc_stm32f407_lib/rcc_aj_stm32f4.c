@@ -389,6 +389,7 @@ void delay_us_systick(uint32_t us_delay)
 *       Returns the system core clock value from the pre-programmed RCC registers.
 *
 * Parameters:
+*   void
 *
 * Return :
 *  uint32_t:         System core clock value.
@@ -445,3 +446,5 @@ uint32_t get_systemcore_clock(void)
 void systick_deconfig()
 {
 }
+
+/* End of File */

@@ -16,12 +16,13 @@
 /*******************************************************************************
  * Macros
  *******************************************************************************/
-
+#define USART_TX_PORT						(GPIOA)
+#define USART_TX_PIN						(9)
 
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
-uint8_t tx_buff[] = "One ring to rule them all\r\n";
+uint8_t tx_buff[] = "\r\n======== Hello World ========\r\n";
 uint8_t tx_buf_size = sizeof(tx_buff)/sizeof(tx_buff[0]);
 
 /*******************************************************************************
@@ -42,8 +43,8 @@ int main()
     /* Initialize the BSP */
     stm32f4_bsp_init();
 
-	/* Define the USART configs */
-	usart_config_st_t usart1cfg = {
+    /* Define the USART configs */
+    usart_config_st_t usart1cfg = {
         .compatmode = USART_COMPATIBLE_MODE_ASYNC,
         .stopbits = USART_STOPBIT_1,
         .txrxmode = USART_TXRX_MODE_TX_EN,
@@ -58,18 +59,20 @@ int main()
 
     usart_config_st_t *usart1cfg_ptr = &usart1cfg;
 
-	/* Config the USART channel */
-    usart_config(usart1cfg_ptr, GPIOA, 9, NULL, 0);
+    /* Config the USART channel */
+    usart_config(usart1cfg_ptr, USART_TX_PORT, USART_TX_PIN, NULL, 0);
 
-    for(;;)
+    /* Initialize the UART channel */
+    usart_init(usart1cfg_ptr);
+
+    for (;;)
     {
-        for(uint16_t i = 0; i < tx_buf_size; i++)
+        for (uint16_t i = 0; i < tx_buf_size; i++)
         {
-			/* Wait for the Transmit buffer to be ready to accept data safely */
-			while( !(USART1->SR & (1U << 7)) );
-            USART1->DR = tx_buff[i];
+            /* Wait for the Transmit buffer to be ready to accept data safely */
+            while (!(usart1cfg_ptr->instance->SR & (1U << 7)));
+            usart1cfg_ptr->instance->DR = tx_buff[i];
         }
-
         delay_ms(200);
     }
 }

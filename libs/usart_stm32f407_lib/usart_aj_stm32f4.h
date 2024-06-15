@@ -97,4 +97,7 @@ typedef enum usart_status_e{
 usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPIOx,
             uint8_t tx_gpio_pin, GPIO_TypeDef *rx_GPIOx, uint8_t rx_gpio_pin);
 
+usart_status_e_t usart_init( usart_config_st_t *usart_cfg);
+usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg);
+
 #endif  /* USART_AJ_STM32F4 */

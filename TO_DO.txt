@@ -32,14 +32,4 @@ NOTE: Currently the priority is the basic functionality of the libraries and tes
 
 	- Test error correction techniques used in communication systems, for this read the digital communication systems theory/practical.
 
-
-(#). I2C -
-
-	-
-
-
-(#). SPI - 
-
-	-
-
 (#). Explore Doxygen code documentation

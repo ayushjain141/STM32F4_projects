@@ -26,8 +26,8 @@
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
-uint8_t tx_buff[] = "\r\n================\r\n Hello World\r\n================\r\n";
-uint8_t tx_buf_size = sizeof(tx_buff)/sizeof(tx_buff[0]);
+uint8_t tx_buff[] = "\x1b[1J\x1b[H\r\n================\r\n Hello World\r\n================\r\n";
+uint8_t tx_buff_size = sizeof(tx_buff)/sizeof(tx_buff[0]);
 
 const uint8_t rx_buff_size = 1;
 uint8_t rx_buff[rx_buff_size] = {0};
@@ -61,7 +61,8 @@ int main()
         .wordlen = USART_WORD_LEN_8_BIT,
         .oversample = USART_OVERSAMPLE_BY_16,
         .parity_en = USART_PARITY_DISABLE,
-        .parity = 0};
+        .parity = 0
+	};
 
     usart_config_st_t *usart1cfg_ptr = &usart1cfg;
 
@@ -71,29 +72,18 @@ int main()
     /* Initialize the USART channel */
     usart_init(usart1cfg_ptr);
 
-    for (uint16_t i = 0; i < tx_buf_size; i++)
-    {
-        /* Wait for the Transmit buffer to be ready to accept data safely */
-        while (!(usart1cfg_ptr->instance->SR & (1U << 7)));
+	/* Transmit Hello world message */
+	uart_transmit_blocking(usart1cfg_ptr, tx_buff, tx_buff_size, 0);
 
-        /* The transmission data can be safely put to Tx data register
-         * (HW Tx buffer). This operation also clears the TXE bit. */
-        usart1cfg_ptr->instance->DR = tx_buff[i];
-    }
     delay_ms(200);
 
     while (1)
     {
+		/* Receive single character from the keyboard press. For this the
+		 * size of rx_buff kept as "1". */
         uart_receive_poll(usart1cfg_ptr, rx_buff, rx_buff_size, 0);
 
-        for (uint16_t i = 0; i < rx_buff_size; i++)
-        {
-            /* Wait for the Transmit buffer to be ready to accept data safely */
-            while (!(usart1cfg_ptr->instance->SR & (1U << 7)));
-
-            /* The transmission data can be safely put to Tx data register
-             * (HW Tx buffer). This operation also clears the TXE bit. */
-            usart1cfg_ptr->instance->DR = rx_buff[i];
-        }
+		/* Transmit back (echo) the received character, to the serial COM port */
+        uart_transmit_blocking(usart1cfg_ptr, rx_buff, rx_buff_size, 0);
     }
 }

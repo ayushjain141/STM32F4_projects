@@ -103,4 +103,7 @@ usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg);
 usart_status_e_t uart_receive_poll(usart_config_st_t *usart_cfg, uint8_t *rx_buff,
                 uint16_t rx_buff_size, uint32_t timeout_milsec);
 
+usart_status_e_t uart_transmit_blocking(usart_config_st_t *usart_cfg, uint8_t *tx_buff,
+                uint16_t tx_buff_size, uint32_t timeout_milsec);
+
 #endif  /* USART_AJ_STM32F4 */

@@ -261,7 +261,7 @@ usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg)
  * Function Name: uart_receive_poll()
  ********************************************************************************
  * Summary:
- *   Receive UART data and store it into buffer.
+ *   Receive UART data and store it into the specified buffer.
  *
  * Parameters:
  *  usart_cfg:          Pointer to USART configs
@@ -271,20 +271,54 @@ usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg)
  *                      data and then terminates.
  *
  * Return :
- *  usart_status_e_t:
+ *  usart_status_e_t:   Status of this receive operation
  *
  *******************************************************************************/
 usart_status_e_t uart_receive_poll(usart_config_st_t *usart_cfg, uint8_t *rx_buff,
-                uint16_t rx_buff_size, uint32_t timeout_milsec)
+                                   uint16_t rx_buff_size, uint32_t timeout_milsec)
 {
-    for(uint16_t i = 0; i < rx_buff_size; i++)
+    for (uint16_t i = 0; i < rx_buff_size; i++)
     {
         /* Wait while the RX data can be safely read from the HW Rx buffer */
-        while(!(usart_cfg->instance->SR & (1U << USART_SR_RXNE_Pos)));
+        while (!(usart_cfg->instance->SR & (1U << USART_SR_RXNE_Pos)))
+            ;
 
         /* Now the data can be safely read from the HW Rx buffer,
          * Read operation clears the RXNE flag .*/
         rx_buff[i] = usart_cfg->instance->DR;
+    }
+
+    return USART_STATUS_SUCCESS;
+}
+
+/*******************************************************************************
+ * Function Name: uart_transmit_blocking()
+ ********************************************************************************
+ * Summary:
+ *   Transmit UART data and from the specified buffer.
+ *
+ * Parameters:
+ *   usart_cfg:          Pointer to USART configs
+ *   tx_buff:            Pointer to buffer of Tx data
+ *   tx_buff_size:       Size of the TX data buffer
+ *   timeout_milsec:     (TO DO) The API waits for this much time in ms for
+ *                       transmitting the data and then terminates.
+ *
+ * Return :
+ *  usart_status_e_t:   Status of this transmit operation
+ *
+ *******************************************************************************/
+usart_status_e_t uart_transmit_blocking(usart_config_st_t *usart_cfg, uint8_t *tx_buff,
+                                        uint16_t tx_buff_size, uint32_t timeout_milsec)
+{
+    for (uint16_t i = 0; i < tx_buff_size; i++)
+    {
+        /* Wait for the Transmit buffer to be ready to accept data safely */
+        while (!(usart_cfg->instance->SR & (1U << USART_SR_TXE_Pos)));
+
+        /* The transmission data can be safely put to Tx data register
+         * (HW Tx buffer). This operation also clears the TXE bit. */
+        usart_cfg->instance->DR = tx_buff[i];
     }
 
     return USART_STATUS_SUCCESS;

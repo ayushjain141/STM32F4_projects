@@ -1,10 +1,11 @@
-### STM32F4 custom device driver libs and Code Examples (CE):<br>
+### STM32F4 custom device driver libs and test-case Examples (CE):<br>
 
-The repo contains custom device driver libraries for STM32F4 series MCU and code examples developed using the same libs.
+The repo contains custom device driver libraries for STM32F4 series MCU and test-case examples developed using the same libs.
 
-The repo has following code example(s) - <br>
+The repo has following test case examples(s) - <br>
 
 1. blinky_app_stm32f407
+2. uart_test_stm32f407
 
 ---------------------------------------------------------
 ## Warning

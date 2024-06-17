@@ -8,6 +8,10 @@
  *
  *******************************************************************************/
 #include "bsp_aj_stm32f4.h"
+#include "rcc_aj_stm32f4.h"
+#include "timer_aj_stm32f4.h"
+#include "delay_aj_stm32f4.h"
+#include "gpio_aj_stm32f4.h"
 
 /*******************************************************************************
  * Function Name: stm32f4_bsp_init()
@@ -26,3 +30,5 @@ void stm32f4_bsp_init(void)
 {
     delay_init(DELAY_TIM_INST);
 }
+
+/* End of File */

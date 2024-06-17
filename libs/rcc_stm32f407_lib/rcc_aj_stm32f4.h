@@ -24,6 +24,7 @@
 #endif
 
 #include "core_cm4.h"
+#include "bsp_aj_stm32f4.h"
 
 /*******************************************************************************
  * Macros
@@ -207,6 +208,7 @@ typedef struct
  ******************************************************************************/
 extern RCC_PLL_CONFIG_PARAMS_t pll_config;
 
+
 /*******************************************************************************
  * Function Prototypes
  ******************************************************************************/
@@ -215,9 +217,10 @@ void MCO_Config(MCO_CHANNEL_e mco_channel, MCO_CLOCK_SOURCE_e mco_clock_source,
 void RCC_System_Clock_Source_Config(int system_clock_source, int pll_clock_source,
                                         RCC_PLL_CONFIG_PARAMS_t *rcc_pll_config_param_t);
 void system_clock_setting(uint32_t sys_core_clock,
-                                                                                    system_bus_clk_cfg_t *sys_bus_clk_cfg);
+                             system_bus_clk_cfg_t *sys_bus_clk_cfg);
 int systick_config_init(uint32_t interrupt_mode, uint32_t ticks);
 void delay_us_systick(uint32_t us_delay);
 void delay_ms_systick(uint32_t ms_delay);
+uint32_t get_systemcore_clock(void);
 
 #endif /* End of File */

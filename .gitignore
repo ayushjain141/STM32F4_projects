@@ -12,3 +12,7 @@
 *.map
 *.htm
 .vscode/
+*.dbgconf
+*.scvd
+*.iex
+*.hex

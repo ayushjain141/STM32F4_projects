@@ -18,12 +18,19 @@
  *******************************************************************************/
 #define USART_TX_PORT						(GPIOA)
 #define USART_TX_PIN						(9)
+#define USART_RX_PORT						(GPIOA)
+#define USART_RX_PIN						(10)
+
+
 
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
-uint8_t tx_buff[] = "\r\n======== Hello World ========\r\n";
+uint8_t tx_buff[] = "\r\n================\r\n Hello World\r\n================\r\n";
 uint8_t tx_buf_size = sizeof(tx_buff)/sizeof(tx_buff[0]);
+
+const uint8_t rx_buff_size = 1;
+uint8_t rx_buff[rx_buff_size] = {0};
 
 /*******************************************************************************
  * Function Name: main()
@@ -47,32 +54,46 @@ int main()
     usart_config_st_t usart1cfg = {
         .compatmode = USART_COMPATIBLE_MODE_ASYNC,
         .stopbits = USART_STOPBIT_1,
-        .txrxmode = USART_TXRX_MODE_TX_EN,
+        .txrxmode = USART_TXRX_MODE_RX_TX_BOTH_EN,
         .hwflowctrl = USART_FLOWCTRL_NONE,
         .instance = USART1,
         .baudrate = 115200,
         .wordlen = USART_WORD_LEN_8_BIT,
         .oversample = USART_OVERSAMPLE_BY_16,
         .parity_en = USART_PARITY_DISABLE,
-        .parity = 0
-    };
+        .parity = 0};
 
     usart_config_st_t *usart1cfg_ptr = &usart1cfg;
 
     /* Config the USART channel */
-    usart_config(usart1cfg_ptr, USART_TX_PORT, USART_TX_PIN, NULL, 0);
+    usart_config(usart1cfg_ptr, USART_TX_PORT, USART_TX_PIN, USART_RX_PORT, USART_RX_PIN);
 
-    /* Initialize the UART channel */
+    /* Initialize the USART channel */
     usart_init(usart1cfg_ptr);
 
-    for (;;)
+    for (uint16_t i = 0; i < tx_buf_size; i++)
     {
-        for (uint16_t i = 0; i < tx_buf_size; i++)
+        /* Wait for the Transmit buffer to be ready to accept data safely */
+        while (!(usart1cfg_ptr->instance->SR & (1U << 7)));
+
+        /* The transmission data can be safely put to Tx data register
+         * (HW Tx buffer). This operation also clears the TXE bit. */
+        usart1cfg_ptr->instance->DR = tx_buff[i];
+    }
+    delay_ms(200);
+
+    while (1)
+    {
+        uart_receive_poll(usart1cfg_ptr, rx_buff, rx_buff_size, 0);
+
+        for (uint16_t i = 0; i < rx_buff_size; i++)
         {
             /* Wait for the Transmit buffer to be ready to accept data safely */
             while (!(usart1cfg_ptr->instance->SR & (1U << 7)));
-            usart1cfg_ptr->instance->DR = tx_buff[i];
+
+            /* The transmission data can be safely put to Tx data register
+             * (HW Tx buffer). This operation also clears the TXE bit. */
+            usart1cfg_ptr->instance->DR = rx_buff[i];
         }
-        delay_ms(200);
     }
 }

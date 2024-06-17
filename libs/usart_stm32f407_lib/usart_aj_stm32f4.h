@@ -100,4 +100,7 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
 usart_status_e_t usart_init( usart_config_st_t *usart_cfg);
 usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg);
 
+usart_status_e_t uart_receive_poll(usart_config_st_t *usart_cfg, uint8_t *rx_buff,
+                uint16_t rx_buff_size, uint32_t timeout_milsec);
+
 #endif  /* USART_AJ_STM32F4 */

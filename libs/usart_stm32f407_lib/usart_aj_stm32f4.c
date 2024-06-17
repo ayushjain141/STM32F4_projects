@@ -21,10 +21,10 @@
  *
  * Parameters:
  *      usart_cfg:      Pointer to USART configs
- *      tx_GPIOx:       Pointer to USART TX pin port
- *      tx_gpio_pin:    USART Tx GPIO pin
- *      rx_GPIOx:       Pointer to USART Rx GPIO pin
- *      rx_gpio_pin:    USART Rx GPIO pin
+ *      tx_GPIOx:       Pointer to USART TX pin port, used in TX mode
+ *      tx_gpio_pin:    USART Tx GPIO pin, used in TX mode
+ *      rx_GPIOx:       Pointer to USART Rx GPIO pin, used in RX mode
+ *      rx_gpio_pin:    USART Rx GPIO pin, used in RX mode
  *
  * Return :
  *      usart_status_e_t:   USART config operation result
@@ -64,7 +64,7 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
                                    (1U << (RCC_APB1ENR_USART2EN_Pos + tmp)));
     }
 
-    /* Enable USARTx/UARTx GPIO clock, simple arithematic operations used on the
+    /* Enable USARTx/UARTx GPIO clock, simple pointer arithematic operations used on the
      * GPIOx address and the hard-coded GPIO base addresses in the STM32 BSP,
      * for ports A,B,C,D etc, see file "stm32f407xx.h" for these base addresses.
      */
@@ -105,38 +105,60 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
     if ((USART1 == usart_cfg->instance) || (USART2 == usart_cfg->instance) ||
         (USART3 == usart_cfg->instance))
     {
-        if (USART_TXRX_MODE_TX_EN == usart_cfg->txrxmode ||
-            USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
-        {
-            tmp = tx_gpio_pin / 8;
+
+		if (USART_TXRX_MODE_TX_EN == usart_cfg->txrxmode)
+		{
+			tmp = tx_gpio_pin / 8;
             tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4))))|
                                             (7U << ((tx_gpio_pin % 8) * 4)));
-        }
-        else if (USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode ||
-                 USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
-        {
-            tmp = rx_gpio_pin / 8;
+		}
+
+		if (USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
+		{
+			tmp = rx_gpio_pin / 8;
             rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4)))) |
                                             (7U << ((rx_gpio_pin % 8) * 4)));
-        }
+		}
+
+		if(USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
+		{
+			tmp = tx_gpio_pin / 8;
+            tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4))))|
+                                            (7U << ((tx_gpio_pin % 8) * 4)));
+
+			tmp = rx_gpio_pin / 8;
+            rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4)))) |
+                                            (7U << ((rx_gpio_pin % 8) * 4)));
+		}
     }
+
     else if ((UART4 == usart_cfg->instance) || (UART5 == usart_cfg->instance) ||
              (USART6 == usart_cfg->instance))
     {
-        if (USART_TXRX_MODE_TX_EN == usart_cfg->txrxmode ||
-            USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
+        if (USART_TXRX_MODE_TX_EN == usart_cfg->txrxmode)
         {
             tmp = tx_gpio_pin / 8;
             tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4)))) |
                                                 (8U << ((tx_gpio_pin % 8) * 4)));
         }
-        else if (USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode ||
-                 USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
+
+        if (USART_TXRX_MODE_RX_EN == usart_cfg->txrxmode)
         {
             tmp = rx_gpio_pin / 8;
             rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4)))) |
                                             (8U << ((rx_gpio_pin % 8) * 4)));
         }
+
+		if(USART_TXRX_MODE_RX_TX_BOTH_EN == usart_cfg->txrxmode)
+		{
+			tmp = tx_gpio_pin / 8;
+            tx_GPIOx->AFR[tmp] |= (uint32_t)((tx_GPIOx->AFR[tmp] & (~(0xFU << ((tx_gpio_pin % 8) * 4)))) |
+                                                (8U << ((tx_gpio_pin % 8) * 4)));
+
+			tmp = rx_gpio_pin / 8;
+            rx_GPIOx->AFR[tmp] |= (uint32_t)((rx_GPIOx->AFR[tmp] & (~(0xFU << ((rx_gpio_pin % 8) * 4)))) |
+                                            (8U << ((rx_gpio_pin % 8) * 4)));
+		}
     }
 
     /* Create the config data for USART_CR1 register */
@@ -211,7 +233,7 @@ usart_status_e_t usart_config(usart_config_st_t *usart_cfg, GPIO_TypeDef *tx_GPI
  *******************************************************************************/
 usart_status_e_t usart_init( usart_config_st_t *usart_cfg)
 {
-    usart_cfg->instance-> CR1 |= (1U << USART_CR1_UE_Pos);
+    usart_cfg->instance->CR1 |= (1U << USART_CR1_UE_Pos);
     return USART_STATUS_SUCCESS;
 }
 
@@ -223,15 +245,48 @@ usart_status_e_t usart_init( usart_config_st_t *usart_cfg)
 *   De-initializes the UART channel.
 *
 * Parameters:
- *   usart_cfg:     Pointer to USART configs
- *
- * Return :
- *  usart_status_e_t:
- *
+*   usart_cfg:     Pointer to USART configs
+*
+* Return :
+*  usart_status_e_t:
+*
 *******************************************************************************/
 usart_status_e_t usart_deinit(usart_config_st_t *usart_cfg)
 {
     usart_cfg->instance->CR1 &= (~(1U << USART_CR1_UE_Pos));
+    return USART_STATUS_SUCCESS;
+}
+
+/*******************************************************************************
+ * Function Name: uart_receive_poll()
+ ********************************************************************************
+ * Summary:
+ *   Receive UART data and store it into buffer.
+ *
+ * Parameters:
+ *  usart_cfg:          Pointer to USART configs
+ *  rx_buff:            Pointer to buffer to store Rx data
+ *  rx_buff_size:       Size of the RX data buffer
+ *  timeout_milsec:     (TO DO) The API waits for this much time in ms for receiving the
+ *                      data and then terminates.
+ *
+ * Return :
+ *  usart_status_e_t:
+ *
+ *******************************************************************************/
+usart_status_e_t uart_receive_poll(usart_config_st_t *usart_cfg, uint8_t *rx_buff,
+                uint16_t rx_buff_size, uint32_t timeout_milsec)
+{
+    for(uint16_t i = 0; i < rx_buff_size; i++)
+    {
+        /* Wait while the RX data can be safely read from the HW Rx buffer */
+        while(!(usart_cfg->instance->SR & (1U << USART_SR_RXNE_Pos)));
+
+        /* Now the data can be safely read from the HW Rx buffer,
+         * Read operation clears the RXNE flag .*/
+        rx_buff[i] = usart_cfg->instance->DR;
+    }
+
     return USART_STATUS_SUCCESS;
 }
 

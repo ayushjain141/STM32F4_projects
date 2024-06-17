@@ -280,8 +280,7 @@ usart_status_e_t uart_receive_poll(usart_config_st_t *usart_cfg, uint8_t *rx_buf
     for (uint16_t i = 0; i < rx_buff_size; i++)
     {
         /* Wait while the RX data can be safely read from the HW Rx buffer */
-        while (!(usart_cfg->instance->SR & (1U << USART_SR_RXNE_Pos)))
-            ;
+        while (!(usart_cfg->instance->SR & (1U << USART_SR_RXNE_Pos)));
 
         /* Now the data can be safely read from the HW Rx buffer,
          * Read operation clears the RXNE flag .*/

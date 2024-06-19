@@ -27,6 +27,9 @@
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
+uint8_t tx_buff[] = "\x1b[1J\x1b[H\r\n======= UART RX IRQ test !!! =======\r\n\nStart typing to see echo -\r\n";
+uint8_t tx_buff_size = sizeof(tx_buff)/sizeof(tx_buff[0]);
+
 uint8_t rx_data = 0;
 bool rx_intr_flag = 0;
 
@@ -94,16 +97,19 @@ int main()
     /* Initialize the USART channel */
     usart_init(usart1cfg_ptr);
 
-	/* Initialize the UART RX interrupt */
+    /* Initialize the UART RX interrupt */
     uart_rx_interrupt_set(usart1cfg_ptr->instance, 1);
 
     __disable_irq();
 
-	NVIC_SetPriority(UART_RX_INTR_INST, 3);
-	
+    NVIC_SetPriority(UART_RX_INTR_INST, 3);
+
     NVIC_EnableIRQ(UART_RX_INTR_INST);
 
     __enable_irq();
+
+    /* Transmit intro message */
+    uart_transmit_blocking(usart1cfg_ptr, tx_buff, tx_buff_size, 0);
 
     while(1)
     {

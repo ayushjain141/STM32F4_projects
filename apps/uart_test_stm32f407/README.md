@@ -1,7 +1,7 @@
 ### Test Case Example(CE):<br>
 # UART test app for STM32F407
 
-The CE demostrates GPIO peripheral example, here character inputs from PC keyboard are received by STM32 MCU and echoed back on a serial terminal program in PC. This communication takes place over a UART link between PC and keyboard.
+The CE demostrates UART peripheral example, here character inputs from PC keyboard are received by STM32 MCU and echoed back on a serial terminal program in PC. This communication takes place over a UART link between PC and keyboard.
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 

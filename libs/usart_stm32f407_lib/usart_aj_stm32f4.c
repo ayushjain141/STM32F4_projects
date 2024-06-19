@@ -327,11 +327,11 @@ usart_status_e_t uart_transmit_blocking(usart_config_st_t *usart_cfg, uint8_t *t
 * Function Name: uart_rx_interrupt_set()
 ********************************************************************************
 * Summary:
-*   Configure the interrupt on the UART rx.
+*   Configure the interrupt on the UART RX.
 *
 * Parameters:
 *   uart_inst:          UART instance
-*   rx_int_en:          Enable/disable value for rx interupt.
+*   rx_int_en:          Enable/disable value for RX interupt.
 *
 * Return :
 *  usart_status_e_t:    Status of RX interrupt config operation.

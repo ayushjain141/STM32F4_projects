@@ -4,8 +4,9 @@ The repo contains custom device driver libraries for STM32F4 series MCU and test
 
 The repo has following test case examples(s) - <br>
 
-1. blinky_app_stm32f407
-2. uart_test_stm32f407
+- blinky_app_stm32f407
+- uart_test_stm32f407
+- uart_rx_interrupt_test_stm32f407
 
 ---------------------------------------------------------
 ## Warning

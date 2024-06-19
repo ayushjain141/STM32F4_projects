@@ -323,4 +323,26 @@ usart_status_e_t uart_transmit_blocking(usart_config_st_t *usart_cfg, uint8_t *t
     return USART_STATUS_SUCCESS;
 }
 
+/*******************************************************************************
+* Function Name: uart_rx_interrupt_set()
+********************************************************************************
+* Summary:
+*   Configure the interrupt on the UART RX.
+*
+* Parameters:
+*   uart_inst:          UART instance
+*   rx_int_en:          Enable/disable value for RX interupt.
+*
+* Return :
+*  usart_status_e_t:    Status of RX interrupt config operation.
+*
+*******************************************************************************/
+usart_status_e_t uart_rx_interrupt_set(USART_TypeDef *uart_inst, bool rx_int_en)
+{
+    uart_inst->CR1 |= (uint32_t)((uart_inst->CR1 & (~(USART_CR1_RXNEIE_Msk))) |
+                    ((uint32_t)rx_int_en << USART_CR1_RXNEIE_Pos));
+
+    return  USART_STATUS_SUCCESS;
+}
+
 /* End of File */

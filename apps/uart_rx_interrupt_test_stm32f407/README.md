@@ -1,7 +1,7 @@
 ### Test Case Example(CE):<br>
-# UART test app for STM32F407
+# UART RX interrupt test for STM32F407
 
-The CE demostrates UART peripheral example, here character inputs from PC keyboard are received by STM32 MCU and echoed back on a serial terminal program in PC. This communication takes place over a UART link between PC and keyboard.
+The CE demostrates UART peripheral example, here character inputs from PC keyboard are received by STM32 MCU and echoed back on a serial terminal program in PC. This communication takes place over a UART link between PC and keyboard. When a character is received in the HW RX buffer of STM32 MCU an interrupt is triggered, in the corresponding interrupt handler(ISR) the received character is read. The ISR also sets a flag which enables transmission of received character back to serial port, which can be displayed on the serial terminal program in PC.
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 
@@ -25,12 +25,12 @@ NOTE: The system core clock is configured to use PLL at 100MHz, this is implemen
 
 3. Configure the serial terminal program in PC with the configs specified in `usart1cfg` mentioned above.
 
-4. Upon the start of application a `Hello World !!!` message appears on the serial terminal program as shown below.
+4. Upon the start of application an intro message appears on the serial terminal program as shown below.
 
     ```
-    ================
-     Hello World !!!
-    ================
+    ======= UART RX IRQ test !!! =======
+
+    Start typing to see echo -
     ```
 
 5. After the message appears, the user can start typing characters on the PC keyboard and the echoed character can be seen printed on the serial terminal program just below the above printed lines.
@@ -38,7 +38,6 @@ NOTE: The system core clock is configured to use PLL at 100MHz, this is implemen
 6. The STM32 MCU receives the serial input from PC via the serial link into it's Rx buffer and than transmits the same buffer data back to the serial converter over it's Tx.
 
 7. Echo from the MCU can be validated by simply disconnecting the HW connection between Tx of MCU and Rx of serial converter, after this we notice that the characters are no longer echoed back on serial terminal when typed on PC keyboard. Upon re-connecting all Rx and Tx we see that now the characters echo back again on serial terminal when typed on PC keyboard.
-
 
 
 <br><br>

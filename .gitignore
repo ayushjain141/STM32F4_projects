@@ -17,4 +17,4 @@
 *.iex
 *.hex
 *.uvoptx
-*.uvguix
+*.uvguix*

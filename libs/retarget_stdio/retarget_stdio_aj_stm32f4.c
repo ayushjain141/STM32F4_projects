@@ -12,12 +12,11 @@
 #include "stm32f407xx.h"
 #include "retarget_stdio_aj_stm32f4.h"
 
-
 /*******************************************************************************
  * Global Variables
  ******************************************************************************/
 static uint8_t print_buff_size = 1;
- 
+
 /* Will be initialized by the printf_retarget_uart_init() */
 static usart_config_st_t *retarg_usartcfg_ptr = NULL;
 
@@ -49,7 +48,6 @@ usart_config_st_t printf_usartcfg = {
     .parity = PRINTF_UART_PARITY,
 };
 
-
 /*******************************************************************************
  * Function Name: fputc()
  *******************************************************************************
@@ -58,16 +56,16 @@ usart_config_st_t printf_usartcfg = {
  *  to work with UART transmit function.
  *
  * Parameters:
- *	ch:				Character to be printed, is typecasted to char type for uart
- *					transmit.
- *  stream:			File stream to send the output to. Not used in case of
- *					printf using uart.
+ *  ch:             Character to be printed, is typecasted to char type for uart
+ *                  transmit.
+ *  stream:         File stream to send the output to. Not used in case of
+ *                  printf using uart.
  *
  * Return :
- *  int				Returns the printed character on success.
+ *  int             Returns the printed character on success.
  *
  ******************************************************************************/
-int fputc(int ch, FILE * stream)
+int fputc(int ch, FILE *stream)
 {
   uart_transmit_blocking(retarg_usartcfg_ptr, (uint8_t *)&ch, print_buff_size, 0);
   return ch;
@@ -95,22 +93,22 @@ int fputc(int ch, FILE * stream)
  ******************************************************************************/
 result_funct printf_retarget_uart_init(void)
 {
-	result_funct res = RESULT_FUNCT_STATUS_SUCCESS;
+  result_funct res = RESULT_FUNCT_STATUS_SUCCESS;
 
-	retarg_usartcfg_ptr = &printf_usartcfg;
+  retarg_usartcfg_ptr = &printf_usartcfg;
 
   /* UART config for printf re-targetting. */
   res = usart_config(&printf_usartcfg, PRINTF_UART_TX_GPIO_PORT,
-        PRINTF_UART_TX_GPIO_PIN, PRINTF_UART_RX_GPIO_PORT, PRINTF_UART_RX_GPIO_PIN);
+                     PRINTF_UART_TX_GPIO_PIN, PRINTF_UART_RX_GPIO_PORT, PRINTF_UART_RX_GPIO_PIN);
 
-  if(RESULT_FUNCT_STATUS_SUCCESS != res)
+  if (RESULT_FUNCT_STATUS_SUCCESS != res)
   {
-	return res;
+    return res;
   }
 
   /* Initialize the UART channel for printf re-targetting. */
   res = usart_init(&printf_usartcfg);
-  if(RESULT_FUNCT_STATUS_SUCCESS != res)
+  if (RESULT_FUNCT_STATUS_SUCCESS != res)
   {
     return res;
   }

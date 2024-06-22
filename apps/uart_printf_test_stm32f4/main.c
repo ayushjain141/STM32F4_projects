@@ -1,7 +1,7 @@
 /*******************************************************************************
-* File Name:	main.c
+* File Name:    main.c
 *
-* Description:	This is the source code for the UART peripheral test application
+* Description:  This is the source code for the UART peripheral test application
 * for STM32F407 MCU.
 *
 * Related Document: See README.md
@@ -18,10 +18,10 @@
 /*******************************************************************************
  * Macros
  *******************************************************************************/
-#define USART_TX_PORT						(GPIOA)
-#define USART_TX_PIN						(9)
-#define USART_RX_PORT						(GPIOA)
-#define USART_RX_PIN						(10)
+#define USART_TX_PORT                       (GPIOA)
+#define USART_TX_PIN                        (9)
+#define USART_RX_PORT                       (GPIOA)
+#define USART_RX_PIN                        (10)
 
 /*******************************************************************************
  * Function Name: main()
@@ -41,15 +41,15 @@ int main()
     /* Initialize the BSP */
     stm32f4_bsp_init();
 
-	printf_retarget_uart_init();
+    printf_retarget_uart_init();
 
-	/* Clear screen and move cursor to terminal's home position (0,0). */
-	printf("\x1b[1J\x1b[H");
+    /* Clear screen and move cursor to terminal's home position (0,0). */
+    printf("\x1b[1J\x1b[H");
 
-	/* Print Hello world message, an integer and a float value. */
-	printf("----------------------------------------------\r\n");
-	printf("Hello World !!!   int = %d, float = %f\r\n", 141, 235.89324);
-	printf("----------------------------------------------\r\n");
+    /* Print Hello world message, an integer and a float value. */
+    printf("----------------------------------------------\r\n");
+    printf("Hello World !!!   int = %d, float = %f\r\n", 141, 235.89324);
+    printf("----------------------------------------------\r\n");
 
-	while(1);
+    while (1);
 }

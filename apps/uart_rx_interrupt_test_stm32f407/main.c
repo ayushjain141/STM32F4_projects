@@ -17,10 +17,10 @@
  * Macros
  *******************************************************************************/
 #define USART_INSTANCE                      (USART1)      
-#define USART_TX_PORT						(GPIOA)
-#define USART_TX_PIN						(9)
-#define USART_RX_PORT						(GPIOA)
-#define USART_RX_PIN						(10)
+#define USART_TX_PORT                       (GPIOA)
+#define USART_TX_PIN                        (9)
+#define USART_RX_PORT                       (GPIOA)
+#define USART_RX_PIN                        (10)
 #define UART_RX_INTR_INST                   (USART1_IRQn)
 
 

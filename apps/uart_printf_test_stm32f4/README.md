@@ -1,11 +1,11 @@
 ### Test Case Example(CE):<br>
-# UART test app for STM32F407
+# UART based printf test app for STM32F407
 
-The CE demostrates UART peripheral example, here character inputs from PC keyboard are received by STM32 MCU and echoed back on a serial terminal program in PC. This communication takes place over a UART link between PC and keyboard.
+The CE demostrates UART peripheral example, in this example `printf()` is retargeted to work with <b>UART</b> peripheral. This is acheived by using <i>../libs/retarget_stdio</i> library.
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 
-## Software(SW) Setup 
+## Software(SW) Setup
 - Tested with Keil uvision4 IDE: V5.22.0.0 (MDK522)
     - Device pack for STM32F407 in keil: STM32F4xx_DFP Version 2.14.0 (2019-07-24)
 - Arm® Compiler V5.06
@@ -19,26 +19,12 @@ NOTE: The system core clock is configured to use PLL at 100MHz, this is implemen
 
 ## Operation
 
-1. The UART configuaration for the test case is defined in the structure `usart1cfg` in <i>\< application >/main.c</i>.
-
-2. Connect the `RX and Tx` of the STM32 with the corresponding `Rx and Tx` of the serial converter, and connect the converter to the PC.
-
-3. Configure the serial terminal program in PC with the configs specified in `usart1cfg` mentioned above.
-
-4. Upon the start of application a `Hello World !!!` message appears on the serial terminal program as shown below.
-
-    ```
-    ================
-     Hello World !!!
-    ================
-    ```
-
-5. After the message appears, the user can start typing characters on the PC keyboard and the echoed character can be seen printed on the serial terminal program just below the above printed lines.
-
-6. The STM32 MCU receives the serial input from PC via the serial link into it's Rx buffer and than transmits the same buffer data back to the serial converter over it's Tx.
-
-7. Echo from the MCU can be validated by simply disconnecting the HW connection between Tx of MCU and Rx of serial converter, after this we notice that the characters are no longer echoed back on serial terminal when typed on PC keyboard. Upon re-connecting all Rx and Tx we see that now the characters echo back again on serial terminal when typed on PC keyboard.
-
+The `printf()` function from the C language's <i>stdio.h</i> is redirected to use UART peripheral by using <i>../libs/retarget_stdio</i> library. After the program runs the following output is observed on the screen, a hello world message an `int` and a `float` value get's printed.
+```
+----------------------------------------------
+Hello World !!!   int = 141, float = 235.893240
+----------------------------------------------
+```
 
 
 <br><br>

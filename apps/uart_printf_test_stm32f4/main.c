@@ -15,13 +15,6 @@
 #include "delay_aj_stm32f4.h"
 #include "retarget_stdio_aj_stm32f4.h"
 
-/*******************************************************************************
- * Macros
- *******************************************************************************/
-#define USART_TX_PORT                       (GPIOA)
-#define USART_TX_PIN                        (9)
-#define USART_RX_PORT                       (GPIOA)
-#define USART_RX_PIN                        (10)
 
 /*******************************************************************************
  * Function Name: main()

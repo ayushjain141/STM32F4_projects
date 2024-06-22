@@ -7,6 +7,7 @@ The repo has following test case examples(s) - <br>
 - blinky_app_stm32f407
 - uart_test_stm32f407
 - uart_rx_interrupt_test_stm32f407
+- uart_printf_test_stm32f4
 
 ---------------------------------------------------------
 ## Warning

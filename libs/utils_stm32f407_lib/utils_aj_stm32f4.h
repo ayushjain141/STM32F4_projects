@@ -29,14 +29,22 @@
 /*******************************************************************************
 * Macros
 *******************************************************************************/
-#define ST_ASSERT(x)        do{                             \
-								(x) ? (void)(0U) : __asm("BKPT #0"); \
-							}while(0)                       \
+#if 0
+#define ST_ASSERT(x)        do{\
+								((x) ? (void)(0U) : __asm("BKPT #0"));\
+							}while(0)
+#endif
 
 /*******************************************************************************
 * Global Variables
 *******************************************************************************/
+typedef enum result_funct_e{
+    RESULT_FUNCT_STATUS_SUCCESS,
+    RESULT_FUNCT_STATUS_FAIL,
+    RESULT_FUNCT_STATUS_BAD_PARAM,
+}result_funct_e_t;
 
+typedef int result_funct;
 
 /*******************************************************************************
 * Function Prototypes

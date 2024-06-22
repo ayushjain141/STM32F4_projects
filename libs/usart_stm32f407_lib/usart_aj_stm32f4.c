@@ -7,11 +7,7 @@
 * Related Document: See README.md
 *
 *******************************************************************************/
-#include <math.h>
 #include "usart_aj_stm32f4.h"
-#include "gpio_aj_stm32f4.h"
-#include "rcc_aj_stm32f4.h"
-
 
 /*******************************************************************************
  * Function Name: usart_config()

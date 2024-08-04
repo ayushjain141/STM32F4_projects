@@ -2,17 +2,17 @@
 ;This is the first ARM Assembly language program you see in the lab.
 ;This program skeleton was from Dave Duguid and Trevor Douglas in summer 2013.
 ;When you write your program, you could have your info at the top document block.
-;For Example:  Your Name, Student Number, what the program is for, and what it does etc.
+;Function calls also implemented, see description at end of file.
 
 ;;; Directives
-          PRESERVE8
-          THUMB
+      PRESERVE8
+      THUMB
 
 ; Vector Table Mapped to Address 0 at Reset
 ; Linker requires __Vectors to be exported
  
-          AREA    RESET, DATA, READONLY
-          EXPORT  __Vectors
+      AREA    RESET, DATA, READONLY
+      EXPORT  __Vectors
 
 __Vectors
 		  DCD  0x20000500 ; stack pointer value when stack is empty, this assumes
@@ -33,28 +33,82 @@ __Vectors
 ; The program
 ; Linker requires Reset_Handler
 
-          AREA    MYCODE, CODE, READONLY
+    AREA    MYCODE, CODE, READONLY
 
-   	  ENTRY
-   	  EXPORT Reset_Handler
+	ENTRY
+
+;;;;;;; Function definitions ;;;;;;;
+	EXPORT Reset_Handler
 
 Reset_Handler
 ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;;
 
-	  MOV R0, #12
+	  MOV R0, #0x12
 
 STOP
-	  ADD R0, R0, #4
-	  MOV R1, #16
-	  MOV R2, #27
-	  MOV R3, #56
+	  ADD R0, R0, #0x4
+	  MOV R1, #0x16
+	  MOV R2, #0x27
+	  MOV R3, #0x56
 	  PUSH {R1}
 	  PUSH {R2}
-	  PUSH {R3}
-	  ADD R0, R0, #5
+	  ADD R0, R0, #0x5
+	  BL fun3add12
 	  POP {R4}
 	  POP {R5}
-	  POP {R6}
    	  B  STOP
 
-      END	;End of t
+fun1add6	PROC
+			MOV R6, #0x6
+			BX LR
+			ENDP
+
+
+fun2add9	PROC
+			PUSH {LR}
+			MOV R6, #0x9
+			BL fun1add6
+			POP {PC}
+			ENDP
+
+
+fun3add12	PROC
+			PUSH {LR}
+			MOV R6, #0x12
+			BL fun2add9
+			POP {PC}
+			ENDP
+
+			END	;End of source
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Refererences
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;(1). The code reference is taken from 
+;	[University of Regina, CS-301 course ](https://www.labs.cs.uregina.ca/301/ARM-subroutine/lecture.php).
+;	The main site for above is - https://www.labs.cs.uregina.ca/301/index.php
+;
+;(2). Tried implementing Function calls as per the below C snippet
+;	Refrence -
+;	[Assembly language PPT from book jonathon Volvano Book web, lec:4,5](https://users.ece.utexas.edu/~valvano/Volume1/)
+
+;	;;; See Code Below ;;;;;;
+	
+;	void Fun1(void){
+;	// body of Fun1
+;	add value '6' to 'R0'
+;	}
+;	void Fun2(void){
+;	// body of Fun2
+;	  Fun1();
+;	}
+;	void Fun3(void){
+;	// body of Fun3
+;	  Fun2();
+;	}
+;	int main(void){
+;	  while(1){
+;	    Fun3();
+;	  }
+;	}

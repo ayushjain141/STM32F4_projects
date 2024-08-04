@@ -15,20 +15,22 @@
       EXPORT  __Vectors
 
 __Vectors
-		 DCD  0x20000500 ; stack pointer value when stack is empty, this assumes
-			;that the stack is located at memory such that the initial MSP.
-			;points to address 0x20000500. This memory location should be in SRAM,
-			;configure these memory addresses using the linker scripts or
-			;"options for Target1 in keil".
-			;The processor uses a full descending stack. 
-			;This means the stack pointer holds the address of the last 
-			;stacked item in memory. When the processor pushes a new item 
-			;onto the stack, it decrements the stack pointer and then 
-			;writes the item to the new memory location.
 
-          DCD  Reset_Handler  ; reset vector
+	DCD  0x20000500
+	; stack pointer value when stack is empty, this assumes
+	;that the stack is located at memory such that the initial MSP.
+	;points to address 0x20000500. This memory location should be in SRAM,
+	;configure these memory addresses using the linker scripts or
+	;"options for Target1 in keil".
+	;The processor uses a full descending stack.
+	;This means the stack pointer holds the address of the last
+	;stacked item in memory. When the processor pushes a new item
+	;onto the stack, it decrements the stack pointer and then
+	;writes the item to the new memory location.
 
-          ALIGN
+	DCD  Reset_Handler  ; reset vector
+
+	ALIGN
 
 ; The program
 ; Linker requires Reset_Handler
@@ -57,6 +59,7 @@ STOP
 	  POP {R4}
 	  POP {R5}
    	  B  STOP
+
 
 fun1add6	PROC
 			MOV R6, #0x6

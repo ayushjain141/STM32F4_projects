@@ -15,7 +15,7 @@
       EXPORT  __Vectors
 
 __Vectors
-		  DCD  0x20000500 ; stack pointer value when stack is empty, this assumes
+		 DCD  0x20000500 ; stack pointer value when stack is empty, this assumes
 			;that the stack is located at memory such that the initial MSP.
 			;points to address 0x20000500. This memory location should be in SRAM,
 			;configure these memory addresses using the linker scripts or

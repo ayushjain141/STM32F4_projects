@@ -1,22 +1,33 @@
+;File Name: asm_test.s
+;
+;Description:
+;The file contains a test assembly code which has several instructions and directives
+;used in it. The code has few instructions for purpose of testing only.
+;Instructions related to function calls and stack operations are also
+;tested in the example.
+;
 ;The semicolon is used to lead an inline documentation.
-;This is the first ARM Assembly language program you see in the lab.
-;This program skeleton was from Dave Duguid and Trevor Douglas in summer 2013.
-;When you write your program, you could have your info at the top document block.
-;Function calls also implemented, see description at end of file.
+;Function calls also implemented, see description at end of file. References
+;also present at the end of file.
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Directives
-      PRESERVE8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;the current file preserves eight-byte alignment of the stack.
+	  ;The linker checks that any code that requires eight-byte alignment of the
+	  ;stack is only called, directly or indirectly, by code that preserves
+	  ;eight-byte alignment of the stack.
+	  PRESERVE8
+      ;The THUMB directive instructs the assembler to interpret subsequent
+	  ;instructions as T32 instructions.
       THUMB
 
 ; Vector Table Mapped to Address 0 at Reset
 ; Linker requires __Vectors to be exported
- 
       AREA    RESET, DATA, READONLY
       EXPORT  __Vectors
 
 __Vectors
-
-	DCD  0x20000500
 	; stack pointer value when stack is empty, this assumes
 	;that the stack is located at memory such that the initial MSP.
 	;points to address 0x20000500. This memory location should be in SRAM,
@@ -27,19 +38,26 @@ __Vectors
 	;stacked item in memory. When the processor pushes a new item
 	;onto the stack, it decrements the stack pointer and then
 	;writes the item to the new memory location.
+	DCD  0x20000500
 
-	DCD  Reset_Handler  ; reset vector
+	; reset vector
+	DCD  Reset_Handler
 
+	;The ALIGN directive aligns the current location to a specified boundary by
+	;padding with zeros or NOP instructions.
 	ALIGN
 
-; The program
-; Linker requires Reset_Handler
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; The program instructions.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     AREA    MYCODE, CODE, READONLY
 
 	ENTRY
 
 ;;;;;;; Function definitions ;;;;;;;
+
+	; Linker requires Reset_Handler
 	EXPORT Reset_Handler
 
 Reset_Handler
@@ -47,7 +65,7 @@ Reset_Handler
 
 	  MOV R0, #0x12
 
-STOP
+START
 	  ADD R0, R0, #0x4
 	  MOV R1, #0x16
 	  MOV R2, #0x27
@@ -58,7 +76,7 @@ STOP
 	  BL fun3add12
 	  POP {R4}
 	  POP {R5}
-   	  B  STOP
+   	  B  START
 
 
 fun1add6	PROC
@@ -85,9 +103,8 @@ fun3add12	PROC
 			END	;End of source
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;Refererences
+;	Refererences
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;(1). The code reference is taken from 
 ;	[University of Regina, CS-301 course ](https://www.labs.cs.uregina.ca/301/ARM-subroutine/lecture.php).
 ;	The main site for above is - https://www.labs.cs.uregina.ca/301/index.php
@@ -115,3 +132,6 @@ fun3add12	PROC
 ;	    Fun3();
 ;	  }
 ;	}
+
+
+; End of File ;

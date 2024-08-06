@@ -53,6 +53,12 @@ __Vectors
 
     AREA    MYCODE, CODE, READONLY
 
+	;The ENTRY directive declares an entry point to a program.
+	;A program must have an entry point. You can specify an entry point in the
+	;following ways:
+	; 1. Using the ENTRY directive in assembly language source code.
+	; 2. Providing a main() function in C or C++ source code.
+	; 3. Using the armlink --entry command-line option.
 	ENTRY
 
 ;;;;;;; Function definitions ;;;;;;;
@@ -73,14 +79,18 @@ START
 	  PUSH {R1}
 	  PUSH {R2}
 	  ADD R0, R0, #0x5
+	  ;"BL" means Branch to a labeled address and save the return address in LR
 	  BL fun3add12
 	  POP {R4}
 	  POP {R5}
+	  ;"B" means Branch to label. If a branch range in +/-2KB.
    	  B  START
 
 
 fun1add6	PROC
 			MOV R6, #0x6
+			;"BX" means Branch and exchange. Branch to an address value stored in Rm, and set
+			;the execution state of the processor (T-bit) based on bit 0 of Rm
 			BX LR
 			ENDP
 
@@ -88,6 +98,7 @@ fun1add6	PROC
 fun2add9	PROC
 			PUSH {LR}
 			MOV R6, #0x9
+			;"BL" means Branch to a labeled address and save the return address in LR
 			BL fun1add6
 			POP {PC}
 			ENDP
@@ -96,11 +107,13 @@ fun2add9	PROC
 fun3add12	PROC
 			PUSH {LR}
 			MOV R6, #0x12
+			;"BL" means Branch to a labeled address and save the return address in LR
 			BL fun2add9
 			POP {PC}
 			ENDP
-
-			END	;End of source
+			;The END directive informs the assembler that it has reached the end
+			;of a source file.
+			END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;	Refererences

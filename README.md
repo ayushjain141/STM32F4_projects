@@ -8,6 +8,7 @@ The repo has following test case examples(s) - <br>
 - uart_test_stm32f407
 - uart_rx_interrupt_test_stm32f407
 - uart_printf_test_stm32f4
+- arm_cortex_m4_assembly_test
 
 ---------------------------------------------------------
 ## Warning

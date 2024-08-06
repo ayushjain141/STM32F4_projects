@@ -1,7 +1,7 @@
 ### Test Case Example(CE):<br>
 # ARM cortex M4 assembly test on STM32F407
 
-The CE contains a test assembly code which has several instructions and directives used in it. The code has few instructions for purpose of testing only.
+The CE contains a test assembly code which has several instructions and directives used in it. The code has few instructions for purpose of testing only. Instructions related to **function calls** and **stack operations** are also tested in the example. The source code is in the file _asm_test.s_. The **project references** are mentioned in the source file at it's end in the section `Refererences`.
 
 Upon step-by-step debugging of the running code in STM32, we can observe the states of CPU registers.
 

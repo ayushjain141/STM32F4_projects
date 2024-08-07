@@ -88,33 +88,83 @@ START
     B  START
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Function Name: fun1add6
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Summary:
+; The functions places value 0x6 in the CPU memory regiseter R6.
+;
+; Parameters:
+;
+;
+; Return :
+;	Returns to instruction address pointed by "LR".
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun1add6    PROC
+	;The assembler uses FUNCTION to identify the start of a function when producing
+	;DWARF call frame information for ELF.
     MOV R6, #0x6
     ;"BX" means Branch and exchange. Branch to an address value stored in Rm, and set
-    ;the execution state of the processor (T-bit) based on bit 0 of Rm
+    ;the execution state of the processor (T-bit) based on bit 0 of Rm.
     BX LR
     ENDP
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Function Name: fun2add9
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Summary:
+; The functions places value 0x9 in the CPU memory regiseter R6. Calls the function
+; "fun1add6".
+;
+; Parameters:
+;
+;
+; Return :
+; The "POP" operation loads the value of "LR" from the stack into the "PC", this
+; write to PC causes the CPU to start execution from this instruction.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun2add9    PROC
     PUSH {LR}
     MOV R6, #0x9
     ;"BL" means Branch to a labeled address and save the return address in LR
     BL fun1add6
+	;The "POP" operation loads the value of "LR" from the stack into the "PC",
+	;this write to PC causes the CPU to start execution from this instruction.
     POP {PC}
     ENDP
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Function Name: fun3add12
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Summary:
+; The functions places value 0x12 in the CPU memory regiseter R6. Calls the function
+; "fun2add9".
+;
+; Parameters:
+;
+;
+; Return :
+; The "POP" operation loads the value of "LR" from the stack into the "PC", this
+; write to PC causes the CPU to start execution from this instruction.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun3add12   PROC
     PUSH {LR}
     MOV R6, #0x12
     ;"BL" means Branch to a labeled address and save the return address in LR
     BL fun2add9
+	;The "POP" operation loads the value of "LR" from the stack into the "PC",
+	;this write to PC causes the CPU to start execution from this instruction.
     POP {PC}
     ENDP
     ;The END directive informs the assembler that it has reached the end
     ;of a source file.
     END
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;   Refererences

@@ -98,18 +98,18 @@ START
 ;
 ;
 ; Return :
-;	Returns to instruction address pointed by "LR".
+;   Returns to instruction address pointed by "LR".
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun1add6    PROC
-	;The assembler uses PROC to identify the start of a function when producing
-	;DWARF call frame information for ELF. This is debug relatetd information.
+    ;The assembler uses PROC to identify the start of a function when producing
+    ;DWARF call frame information for ELF. This is debug relatetd information.
 
-	MOV R6, #0x6
+    MOV R6, #0x6
     ;"BX" means Branch and exchange. Branch to an address value stored in Rm, and set
     ;the execution state of the processor (T-bit) based on bit 0 of Rm.
     BX LR
-	;The ENDP directive marks the end of an AAPCS-conforming function.
+    ;The ENDP directive marks the end of an AAPCS-conforming function.
     ENDP
 
 
@@ -129,17 +129,17 @@ fun1add6    PROC
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun2add9    PROC
-	;The assembler uses PROC to identify the start of a function when producing
-	;DWARF call frame information for ELF. This is debug relatetd information.
+    ;The assembler uses PROC to identify the start of a function when producing
+    ;DWARF call frame information for ELF. This is debug relatetd information.
 
     PUSH {LR}
     MOV R6, #0x9
     ;"BL" means Branch to a labeled address and save the return address in LR
     BL fun1add6
-	;The "POP" operation loads the value of "LR" from the stack into the "PC",
-	;this write to PC causes the CPU to start execution from this instruction.
+    ;The "POP" operation loads the value of "LR" from the stack into the "PC",
+    ;this write to PC causes the CPU to start execution from this instruction.
     POP {PC}
-	;The ENDFUNC directive marks the end of an AAPCS-conforming function.
+    ;The ENDFUNC directive marks the end of an AAPCS-conforming function.
     ENDP
 
 
@@ -159,17 +159,17 @@ fun2add9    PROC
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 fun3add12   PROC
-	;The assembler uses PROC to identify the start of a function when producing
-	;DWARF call frame information for ELF. This is debug relatetd information.
+    ;The assembler uses PROC to identify the start of a function when producing
+    ;DWARF call frame information for ELF. This is debug relatetd information.
 
     PUSH {LR}
     MOV R6, #0x12
     ;"BL" means Branch to a labeled address and save the return address in LR
     BL fun2add9
-	;The "POP" operation loads the value of "LR" from the stack into the "PC",
-	;this write to PC causes the CPU to start execution from this instruction.
+    ;The "POP" operation loads the value of "LR" from the stack into the "PC",
+    ;this write to PC causes the CPU to start execution from this instruction.
     POP {PC}
-	;The ENDFUNC directive marks the end of an AAPCS-conforming function.
+    ;The ENDFUNC directive marks the end of an AAPCS-conforming function.
     ENDP
     ;The END directive informs the assembler that it has reached the end
     ;of a source file.

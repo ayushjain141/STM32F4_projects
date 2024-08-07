@@ -124,7 +124,7 @@ fun3add12	PROC
 ;
 ;(2). Tried implementing Function calls as per the below C snippet
 ;	Refrence -
-;	[Assembly language PPT from book jonathon Volvano Book web, lec:4,5](https://users.ece.utexas.edu/~valvano/Volume1/)
+;	[Assembly language PPT from book jonathon Volvano Book web, lectures tab, lec:4,5](https://users.ece.utexas.edu/~valvano/Volume1/)
 
 ;	;;; See Code Below ;;;;;;
 	

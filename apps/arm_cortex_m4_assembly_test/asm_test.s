@@ -69,51 +69,51 @@ __Vectors
 Reset_Handler
 ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;;
 
-	  MOV R0, #0x12
+	MOV R0, #0x12
 
 START
-	  ADD R0, R0, #0x4
-	  MOV R1, #0x16
-	  MOV R2, #0x27
-	  MOV R3, #0x56
-	  PUSH {R1}
-	  PUSH {R2}
-	  ADD R0, R0, #0x5
-	  ;"BL" means Branch to a labeled address and save the return address in LR
-	  BL fun3add12
-	  POP {R4}
-	  POP {R5}
-	  ;"B" means Branch to label. If a branch range in +/-2KB.
-   	  B  START
+	ADD R0, R0, #0x4
+	MOV R1, #0x16
+	MOV R2, #0x27
+	MOV R3, #0x56
+	PUSH {R1}
+	PUSH {R2}
+	ADD R0, R0, #0x5
+	;"BL" means Branch to a labeled address and save the return address in LR
+	BL fun3add12
+	POP {R4}
+	POP {R5}
+	;"B" means Branch to label. If a branch range in +/-2KB.
+	B  START
 
 
 fun1add6	PROC
-			MOV R6, #0x6
-			;"BX" means Branch and exchange. Branch to an address value stored in Rm, and set
-			;the execution state of the processor (T-bit) based on bit 0 of Rm
-			BX LR
-			ENDP
+	MOV R6, #0x6
+	;"BX" means Branch and exchange. Branch to an address value stored in Rm, and set
+	;the execution state of the processor (T-bit) based on bit 0 of Rm
+	BX LR
+	ENDP
 
 
 fun2add9	PROC
-			PUSH {LR}
-			MOV R6, #0x9
-			;"BL" means Branch to a labeled address and save the return address in LR
-			BL fun1add6
-			POP {PC}
-			ENDP
+	PUSH {LR}
+	MOV R6, #0x9
+	;"BL" means Branch to a labeled address and save the return address in LR
+	BL fun1add6
+	POP {PC}
+	ENDP
 
 
 fun3add12	PROC
-			PUSH {LR}
-			MOV R6, #0x12
-			;"BL" means Branch to a labeled address and save the return address in LR
-			BL fun2add9
-			POP {PC}
-			ENDP
-			;The END directive informs the assembler that it has reached the end
-			;of a source file.
-			END
+	PUSH {LR}
+	MOV R6, #0x12
+	;"BL" means Branch to a labeled address and save the return address in LR
+	BL fun2add9
+	POP {PC}
+	ENDP
+	;The END directive informs the assembler that it has reached the end
+	;of a source file.
+	END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;	Refererences

@@ -69,10 +69,11 @@ __Vectors
 Reset_Handler
 ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;;
 
+
 	MOV R0, #0x12
 
 START
-	ADD R0, R0, #0x4
+  ADD R0, R0, #0x4
 	MOV R1, #0x16
 	MOV R2, #0x27
 	MOV R3, #0x56

@@ -1,7 +1,7 @@
 ### Code Example(CE):<br>
 # Blinky app for STM32F407
 
-The CE demostrates GPIO peripheral example, here an LED is toggLED with a delay period which is controlled by a user button input.
+The CE demostrates GPIO peripheral example, here an LED is toggled with a delay period which is controlled by a user button input.
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 

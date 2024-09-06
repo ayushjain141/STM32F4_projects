@@ -13,18 +13,19 @@
 #include "stm32f4xx.h"
 #include <stdbool.h>
 
-#ifdef	__STM32F407xx_H
+#ifdef  __STM32F407xx_H
 #include "stm32f407xx.h"
 #endif  /* __STM32F407xx_H */
 
 /*******************************************************************************
  * Macros
  *******************************************************************************/
-#define SET(GPIOx, GPIO_pin)        (GPIOx -> BSRR |= (1 << GPIO_pin) & (~(1 << (GPIO_pin + 16))))
-#define RESET(GPIOx, GPIO_pin)      (GPIOx -> BSRR |= (1 << (GPIO_pin + 16)) & (~(1 << GPIO_pin)))
+#define SET_PIN(GPIOx, GPIO_pin)            (GPIOx -> BSRR |= (1 << GPIO_pin) & (~(1 << (GPIO_pin + 16))))
+#define RESET_PIN(GPIOx, GPIO_pin)          (GPIOx -> BSRR |= (1 << (GPIO_pin + 16)) & (~(1 << GPIO_pin)))
+#define TOGGLE_PIN(GPIOx, GPIO_pin)         (GPIOx -> ODR ^= (1U << GPIO_pin))
 
-#define GENERAL_PURPOSE_INPUT       (0x00)
-#define GENERAL_PURPOSE_OUTPUT      (0X01)
+#define GENERAL_PURPOSE_INPUT               (0x00)
+#define GENERAL_PURPOSE_OUTPUT              (0X01)
 
 /*******************************************************************************
 * Global Variables
@@ -35,14 +36,14 @@ typedef enum
     gpio_moder_in,
     gpio_moder_out,
     gpio_moder_alternate_func,
-    gpio_moder_analog
+    gpio_moder_analog,
 } gpio_moder_t;
 
 /* GPIO output type */
 typedef enum
 {
     gpio_otyper_push_pull,
-    gpio_otyper_open_drain
+    gpio_otyper_open_drain,
 } gpio_otyper_t;
 
 /* GPIO output speed */
@@ -51,7 +52,7 @@ typedef enum
     gpio_ospeedr_low,
     gpio_ospeedr_med,
     gpio_ospeedr_high,
-    gpio_ospeedr_very_high
+    gpio_ospeedr_very_high,
 } gpio_ospeedr_t;
 
 /* GPIO pull-up/pull-down direction */

@@ -28,7 +28,7 @@
       EXPORT  __Vectors
 
 __Vectors
-    ; stack pointer value when stack is empty, this assumes
+    ;stack pointer value when stack is empty, this assumes
     ;that the stack is located at memory such that the initial MSP.
     ;points to address 0x20000500. This memory location should be in SRAM,
     ;configure these memory addresses using the linker scripts or
@@ -68,7 +68,6 @@ __Vectors
 
 Reset_Handler
 ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;;
-
 
     MOV R0, #0x12
 

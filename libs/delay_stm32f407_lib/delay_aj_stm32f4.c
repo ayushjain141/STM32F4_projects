@@ -74,8 +74,7 @@ void delay_us(uint32_t us)
     for (i = 0; i < us; i++)
     {
         /* Wait for UIF to be set. This will generate 1 ms delay */
-        while ((DELAY_TIM_INST->SR & TIM_SR_UIF) == 0)
-            ;
+        while ((DELAY_TIM_INST->SR & TIM_SR_UIF) == 0);
 
         /* Reset UIF */
         DELAY_TIM_INST->SR &= ~TIM_SR_UIF;

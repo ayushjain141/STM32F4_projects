@@ -5,7 +5,7 @@ The CE demostrates GPIO peripheral example, here an LED is toggLED with a delay 
 
 NOTE: The system core clock is configured to use PLL at 100MHz, this is implemented in the file <i>\< application >\RTE\Device\STM32F407VETx\system_stm32f4xx.c</i> in the function `SystemInit()`, this file is a part of the application.
 
-## Software Setup 
+## Software Setup
 - Tested with Keil uvision4 IDE: V5.22.0.0 (MDK522)
     - Device pack for STM32F407 in keil: STM32F4xx_DFP Version 2.14.0 (2019-07-24)
 - Arm® Compiler V5.06
@@ -20,7 +20,7 @@ NOTE: The system core clock is configured to use PLL at 100MHz, this is implemen
 
 1. Upon the start of application the user LED at pin `USER_LED_PIN` starts to toggle at frequency of `10 Hz`.
 
-2. On every press of user button at pin `USER_BTN_PIN`, the `EXTI` interrupt is triggered and the frequency of user LED toggling changes in the `EXTI4_IRQHandler`. There are 3 LED blinking delays which are mentioned in ` toggle_delay[]` in <i>\< application >/main.c.
+2. On every press of user button at pin `USER_BTN_PIN`, the `EXTI` interrupt is triggered and the frequency of user LED toggling changes in the `EXTI4_IRQHandler`. There are 3 LED blinking delays which are mentioned in ` delay_arr[]` in <i>\< application >/main.c</i>, this array is used like a circular buffer and the `EXTI4_IRQHandler` changes the pointer to this array's values.
 
 <br><br>
 ---------------------------------------------------------

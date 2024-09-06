@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,STM32F4XX,__ASSEMBLY__,KEIL_IDE,TM_DISCO_STM32F4_DISCOVERY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libs\;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\rcc_stm32f407_lib;..\..\libs\timer_stm32f407_lib;..\..\libs\bsp</IncludePath>
+              <IncludePath>..\..\libs\;..\..\libs\delay_stm32f407_lib;..\..\libs\gpio_stm32f407_lib;..\..\libs\rcc_stm32f407_lib;..\..\libs\timer_stm32f407_lib;..\..\libs\bsp;..\..\libs\utils_stm32f407_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

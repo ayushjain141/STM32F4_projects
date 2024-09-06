@@ -278,10 +278,10 @@ void system_clock_setting(uint32_t sys_core_clock, system_bus_clk_cfg_t *sys_bus
 
 /*******************************************************************************
  * Function Name: systick_config_init()
- ********************************************************************************
+ *******************************************************************************
  * Summary:
- *   Configures and initializes the systick timer based on the (reload value + 1)
- *   supplied as ticks and the interrupt mode.
+ * Configures and initializes the systick timer based on the (reload value + 1)
+ * supplied as ticks and the interrupt mode.
  *
  * The clock source for systick initialized here will be the processor clock.
  * No calibration field used.
@@ -298,7 +298,7 @@ void system_clock_setting(uint32_t sys_core_clock, system_bus_clk_cfg_t *sys_bus
  * Return :
  *  int:                 Result of systick init.
  *
- *******************************************************************************/
+ ******************************************************************************/
 int systick_config_init(uint32_t interrupt_mode, uint32_t ticks)
 {
     if ((ticks - 1) > SYSTICK_RELOAD_VAL_MAX)

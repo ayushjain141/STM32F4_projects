@@ -14,6 +14,10 @@
 #include <stdbool.h>
 #include "stm32f4xx.h"
 #include "utils_aj_stm32f4.h"
+#include "rcc_aj_stm32f4.h"
+#include "timer_aj_stm32f4.h"
+#include "delay_aj_stm32f4.h"
+#include "gpio_aj_stm32f4.h"
 
 
 /*******************************************************************************

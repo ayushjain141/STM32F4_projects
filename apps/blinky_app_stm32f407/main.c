@@ -26,7 +26,7 @@
 /*******************************************************************************
  * Global Variables
  *******************************************************************************/
-const uint32_t toggle_delay[] = {50, 500, 2000};
+const uint32_t delay_arr[] = {50, 500, 2000};
 volatile uint32_t delay_select = 0;
 
 /*******************************************************************************
@@ -98,9 +98,9 @@ int main()
 
   while (true)
   {
-    delay_ms(toggle_delay[delay_select]);
-    SET(USER_LED_PORT, USER_LED_PIN);
-    delay_ms(toggle_delay[delay_select]);
-    RESET(USER_LED_PORT, USER_LED_PIN);
+    delay_ms(delay_arr[delay_select]);
+    SET_PIN(USER_LED_PORT, USER_LED_PIN);
+    delay_ms(delay_arr[delay_select]);
+    RESET_PIN(USER_LED_PORT, USER_LED_PIN);
   }
 }

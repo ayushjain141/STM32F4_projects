@@ -18,10 +18,12 @@ NOTE: Currently the priority is the basic functionality of the libraries and tes
 	- Check the software (libs + test apps) with various optimization levels.
 
 (#). General C/Cpp programming -
-	
+
 	- Parameter limits check for input parameters of functions.
 
 	- Use of assertions is a good practice but currently they may be implemented at a few places only in the assosciated software. Usage of assertions is very important for detecting bugs during SW development and before the SW is production ready.
+
+	- Internal code documentation.
 
 
 (#). RCC driver/test-app:
@@ -40,7 +42,7 @@ NOTE: Currently the priority is the basic functionality of the libraries and tes
 
 
 (#). ARM assembly language -
-	
+
 	- Learn complex program flow like ISR and function calls.
-	
+
 	- Learn program optimizations

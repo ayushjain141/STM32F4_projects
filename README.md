@@ -1,8 +1,8 @@
-### STM32F4 custom device driver libs and test-case Examples (CE):<br>
+### STM32F4 custom bare-metal device driver libs and test-case Examples (CE):<br>
 
-The repo contains custom device driver libraries for STM32F4 series MCU and test-case examples developed using the same libs.
+The repo contains custom bare-metal device driver libraries for STM32F4 series MCU and test-case examples developed using the same libs.
 
-The repo has following test case examples(s) - <br>
+The repo has following test case examples(s) present in _\<project>/apps_ and the driver libraries are present in _\<project>/libs_ - <br>
 
 - blinky_app_stm32f407
 - uart_test_stm32f407
@@ -11,7 +11,7 @@ The repo has following test case examples(s) - <br>
 - arm_cortex_m4_assembly_test
 
 <br>
-Note: The libs can be added to applications using the makefile like build system or an IDE for Embedded software. In this repo, most of the apps have been developed using Keil IDE, and it's project environment configured for STM32F4 MCU. 
+Note: The libs can be added to applications using the makefile like build system or an IDE for Embedded software. In this repo, most of the apps have been developed using Keil IDE, and it's project environment configured for STM32F4 MCU.
 
 ---------------------------------------------------------
 ## Warning

@@ -16,12 +16,15 @@
  * Macros
  ******************************************************************************/
 #define USER_LED_PORT                       (GPIOA)
-#define USER_LED_PIN                        (7)
+#define USER_LED_PIN                        (7U)
 #define USER_BTN_PORT                       (GPIOE)
-#define USER_BTN_PIN                        (4)
+#define USER_BTN_PIN                        (4U)
 #define USER_BTN_INTR_INST                  (EXTI4_IRQn)
-#define USR_BTN_INTR_PRIORITY               (3)
-#define LED_BLINK_DELAY_NUM                 (3)
+#define USR_BTN_INTR_PRIORITY               (3U)
+#define LED_BLINK_DELAY_NUM                 (3U)
+#define LED_BLINK_FIRST_DELAY               (50U)
+#define LED_BLINK_SECOND_DELAY              (500U)
+#define LED_BLINK_THIRD_DELAY               (2000U)
 
 
 /*******************************************************************************
@@ -29,7 +32,9 @@
  ******************************************************************************/
 /* Contains delay values for LED blinking, will be used like a cicrcular buffer.
  */
-const uint32_t delay_arr[] = {50, 500, 2000};
+const uint32_t delay_arr[] = {LED_BLINK_FIRST_DELAY, LED_BLINK_SECOND_DELAY,
+                              LED_BLINK_THIRD_DELAY};
+
 volatile uint32_t delay_select = 0;
 
 
@@ -52,8 +57,8 @@ void EXTI4_IRQHandler(void)
   /* Check if the desired user-button pressed. */
   if (EXTI->PR & (1U << USER_BTN_PIN))
   {
-		/* Change the delay to next value. Here "delay_arr" used like a circular
-		 * buffer. */
+    /* Change the delay to next value. Here "delay_arr" used like a circular
+     * buffer. */
     delay_select = (delay_select + 1) % LED_BLINK_DELAY_NUM;
   }
 
@@ -78,7 +83,7 @@ void EXTI4_IRQHandler(void)
  ******************************************************************************/
 int main()
 {
-	/* User-button interrupt configuration settings. */
+  /* User-button interrupt configuration settings. */
   static gpio_intr_config_t usr_btn_intr_conf = {
       .rising_edge = 0,
       .falling_edge = 1,
@@ -89,7 +94,7 @@ int main()
 
   /* Config GPIO for LED. */
   gpio_output_config(USER_LED_PORT, USER_LED_PIN, gpio_otyper_push_pull,
-	                   gpio_ospeedr_high, gpio_pupdr_float);
+                     gpio_ospeedr_high, gpio_pupdr_float);
 
   /* Config GPIO for Input button. */
   gpio_input_config(USER_BTN_PORT, USER_BTN_PIN, gpio_pupdr_pull_up);
@@ -98,16 +103,16 @@ int main()
   config_gpio_interrupt(USER_BTN_PORT, USER_BTN_PIN,
                         &usr_btn_intr_conf);
 
-	/* Disable global interrupts. */
+  /* Disable global interrupts. */
   __disable_irq();
 
-	/* Set user button (GPIO) priority. */
+  /* Set user button (GPIO) priority. */
   NVIC_SetPriority(USER_BTN_INTR_INST, USR_BTN_INTR_PRIORITY);
 
-	/* Enable user button (GPIO). */
+  /* Enable user button (GPIO). */
   NVIC_EnableIRQ(USER_BTN_INTR_INST);
 
-	/* Enable global interrupts. */
+  /* Enable global interrupts. */
   __enable_irq();
 
   while (true)

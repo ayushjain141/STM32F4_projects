@@ -26,6 +26,7 @@
 #define LED_BLINK_SECOND_DELAY							(500U)
 #define LED_BLINK_THIRD_DELAY								(2000U)
 
+
 /*******************************************************************************
  * Global Variables
  ******************************************************************************/
@@ -33,6 +34,7 @@
  */
 const uint32_t delay_arr[] = {LED_BLINK_FIRST_DELAY, LED_BLINK_SECOND_DELAY,
                               LED_BLINK_THIRD_DELAY};
+
 volatile uint32_t delay_select = 0;
 
 
@@ -81,7 +83,7 @@ void EXTI4_IRQHandler(void)
  ******************************************************************************/
 int main()
 {
-    /* User-button interrupt configuration settings. */
+	/* User-button interrupt configuration settings. */
   static gpio_intr_config_t usr_btn_intr_conf = {
       .rising_edge = 0,
       .falling_edge = 1,
@@ -92,7 +94,7 @@ int main()
 
   /* Config GPIO for LED. */
   gpio_output_config(USER_LED_PORT, USER_LED_PIN, gpio_otyper_push_pull,
-                       gpio_ospeedr_high, gpio_pupdr_float);
+	                   gpio_ospeedr_high, gpio_pupdr_float);
 
   /* Config GPIO for Input button. */
   gpio_input_config(USER_BTN_PORT, USER_BTN_PIN, gpio_pupdr_pull_up);
@@ -101,16 +103,16 @@ int main()
   config_gpio_interrupt(USER_BTN_PORT, USER_BTN_PIN,
                         &usr_btn_intr_conf);
 
-    /* Disable global interrupts. */
+	/* Disable global interrupts. */
   __disable_irq();
 
-    /* Set user button (GPIO) priority. */
+	/* Set user button (GPIO) priority. */
   NVIC_SetPriority(USER_BTN_INTR_INST, USR_BTN_INTR_PRIORITY);
 
-    /* Enable user button (GPIO). */
+	/* Enable user button (GPIO). */
   NVIC_EnableIRQ(USER_BTN_INTR_INST);
 
-    /* Enable global interrupts. */
+	/* Enable global interrupts. */
   __enable_irq();
 
   while (true)
